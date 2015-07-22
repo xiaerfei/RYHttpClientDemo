@@ -14,10 +14,7 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdRequestType){
 };
 
 typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
-    RYBaseAPICmdErrorTypeDefault,       //没有产生过API请求，这个是manager的默认状态。
-    RYBaseAPICmdErrorTypeSuccess,       //API请求成功且返回数据正确，此时manager的数据是可以直接拿来使用的。
-    RYBaseAPICmdErrorTypeNoContent,     //API请求成功但返回数据不正确。如果回调数据验证函数返回值为NO，manager的状态就会是这个。
-    RYBaseAPICmdErrorTypeParamsError,   //参数错误，此时manager不会调用API，因为参数验证是在调用API之前做的。
+    RYBaseAPICmdErrorTypeDefault,       //这个是manager的默认状态。
     RYBaseAPICmdErrorTypeTimeout,       //请求超时。设置的是20秒超时。
     RYBaseAPICmdErrorTypeNoNetWork      //网络不通。在调用API之前会判断一下当前网络是否通畅，这个也是在调用API之前验证的，和上面超时的状态是有区别的。
 };
