@@ -16,5 +16,7 @@
 - (void)cancelRequestWithRequestID:(NSInteger)requestID;
 - (void)cancelAllRequest;
 
+- (BOOL)isLoadingWithRequestID:(NSInteger)requestID;
+
 - (NSInteger)performCmd:(RYBaseAPICmd *)RYBaseAPICmd;
 @end

@@ -31,12 +31,11 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - APICmdApiCallBackDelegate
-- (void)apiCmdDidSuccess:(RYBaseAPICmd *)RYBaseAPICmd responseData:(NSDictionary *)responseData
+- (void)apiCmdDidSuccess:(RYBaseAPICmd *)baseAPICmd responseData:(id)responseData
 {
-    NSLog(@"%@",responseData);
+    
 }
-
-- (void)apiCmdDidFailed:(RYBaseAPICmd *)RYBaseAPICmd error:(NSError *)error errorType:(RYBaseAPICmdErrorType)errorType
+- (void)apiCmdDidFailed:(RYBaseAPICmd *)baseAPICmd error:(NSError *)error
 {
     
 }

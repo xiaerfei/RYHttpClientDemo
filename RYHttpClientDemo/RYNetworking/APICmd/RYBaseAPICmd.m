@@ -7,10 +7,13 @@
 //
 
 #import "RYBaseAPICmd.h"
+#import "RYAPIManager.h"
 
 @interface RYBaseAPICmd ()
-@property (nonatomic,strong,readwrite) NSString *absouteUrlString;
+@property (nonatomic, copy,readwrite) NSString *absouteUrlString;
 @property (nonatomic, assign,readwrite) NSInteger requestId;
+@property (nonatomic, copy,readwrite) NSDictionary *cookie;
+@property (nonatomic, assign,readwrite) BOOL isLoading;
 @end
 
 @implementation RYBaseAPICmd
@@ -22,7 +25,9 @@
         if ([self conformsToProtocol:@protocol(RYBaseAPICmdDelegate)]) {
             self.child = (id<RYBaseAPICmdDelegate>) self;
         } else {
-            NSLog(@"子类必须要实现APIManager这个protocol。");
+#ifdef DEBUGLOGGER
+            NSAssert(0, @"子类必须要实现APIManager这个protocol。");
+#endif
         }
     }
     return self;
@@ -30,24 +35,52 @@
 
 - (NSString *)absouteUrlString
 {
-    
-    return [NSString stringWithFormat:@"%@%@",self.host,self.path];
+    _absouteUrlString = [[NSString stringWithFormat:@"%@%@",self.host,self.path] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return _absouteUrlString;
 }
 
 - (NSString *)host
 {
-    return @"http://api.ycapp.yiche.com/";
+    if ([self.child respondsToSelector:@selector(apiHost)]) {
+        return [self.child apiHost];
+    }
+    return @"";
 }
-
-- (void)apiRequestId:(NSInteger)requestId
+/**
+ *   @author xiaerfei, 15-09-08 11:09:14
+ *
+ *   isLoading
+ *
+ *   @return
+ */
+- (BOOL)isLoading
 {
-    self.requestId = requestId;
+    _isLoading = [[RYAPIManager manager] isLoadingWithRequestID:self.requestId];
+    return _isLoading;
+}
+/**
+ *   @author xiaerfei, 15-09-08 11:09:59
+ *
+ *   取消当前的请求
+ */
+- (void)cancelRequest
+{
+    [[RYAPIManager manager] cancelRequestWithRequestID:self.requestId];
 }
 
-
-
+/**
+ *   @author xiaerfei, 15-08-25 14:08:51
+ *
+ *   加载cookie
+ *
+ *   @return
+ */
 - (NSDictionary *)cookie
 {
+    if ([self.child respondsToSelector:@selector(apiCookie)]) {
+        return [self.child apiCookie];
+    }
+    
     NSArray *arcCookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"sessionCookies"]];
 
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -55,10 +88,28 @@
     for (NSHTTPCookie *cookie in arcCookies){
         [cookieStorage setCookie: cookie];
     }
-    
     NSDictionary *sheaders = [NSHTTPCookie requestHeaderFieldsWithCookies:arcCookies];
-    return sheaders;
+    _cookie = sheaders;
+    return _cookie;
+}
+/**
+ *   @author xiaerfei, 15-08-25 14:08:05
+ *
+ *   开始请求数据
+ */
+- (void)loadData
+{
+    self.requestId = [[RYAPIManager manager] performCmd:self];
 }
 
-
+- (void)dealloc
+{
+    if ([self.child respondsToSelector:@selector(isCancelled)]) {
+        if ([self.child isCacelRequest]) {
+            [self cancelRequest];
+        }
+    } else {
+        [self cancelRequest];
+    }
+}
 @end
