@@ -27,6 +27,7 @@
 		4E7B40B31BB9307400FB8492 /* RYBaseAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B40AC1BB9307400FB8492 /* RYBaseAPICmd.m */; };
 		4E7B40B41BB9307400FB8492 /* RYAPILogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B40AF1BB9307400FB8492 /* RYAPILogger.m */; };
 		4E7B40B51BB9307400FB8492 /* RYAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B40B21BB9307400FB8492 /* RYAPIManager.m */; };
+		4E7B40B81BB934DB00FB8492 /* RYNetApiProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B40B71BB934DB00FB8492 /* RYNetApiProxy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		4E7B40AF1BB9307400FB8492 /* RYAPILogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYAPILogger.m; sourceTree = "<group>"; };
 		4E7B40B11BB9307400FB8492 /* RYAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYAPIManager.h; sourceTree = "<group>"; };
 		4E7B40B21BB9307400FB8492 /* RYAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYAPIManager.m; sourceTree = "<group>"; };
+		4E7B40B61BB934DB00FB8492 /* RYNetApiProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYNetApiProxy.h; sourceTree = "<group>"; };
+		4E7B40B71BB934DB00FB8492 /* RYNetApiProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYNetApiProxy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +225,8 @@
 			children = (
 				4E7B40B11BB9307400FB8492 /* RYAPIManager.h */,
 				4E7B40B21BB9307400FB8492 /* RYAPIManager.m */,
+				4E7B40B61BB934DB00FB8492 /* RYNetApiProxy.h */,
+				4E7B40B71BB934DB00FB8492 /* RYNetApiProxy.m */,
 			);
 			path = APIManager;
 			sourceTree = "<group>";
@@ -335,6 +340,7 @@
 				4E2CAD281B5F7CC100AC0E94 /* AFURLResponseSerialization.m in Sources */,
 				4E2CAD2C1B5F8CE700AC0E94 /* ItemListAPICmd.m in Sources */,
 				4E2CAD221B5F7CC100AC0E94 /* AFHTTPRequestOperationManager.m in Sources */,
+				4E7B40B81BB934DB00FB8492 /* RYNetApiProxy.m in Sources */,
 				4E7B40B51BB9307400FB8492 /* RYAPIManager.m in Sources */,
 				4E7B40B31BB9307400FB8492 /* RYBaseAPICmd.m in Sources */,
 				4E2CAD251B5F7CC100AC0E94 /* AFSecurityPolicy.m in Sources */,
