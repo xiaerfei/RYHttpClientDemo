@@ -99,6 +99,9 @@
  */
 - (void)loadData
 {
+    if ([self.paramSource respondsToSelector:@selector(paramsForApi:)]) {
+        [self.paramSource paramsForApi:self];
+    }
     self.requestId = [[RYAPIManager manager] performCmd:self];
 }
 

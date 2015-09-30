@@ -151,7 +151,13 @@ static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
 - (void)apiCmdDidSuccess:(RYBaseAPICmd *)baseAPICmd responseData:(id)responseData;
 - (void)apiCmdDidFailed:(RYBaseAPICmd *)baseAPICmd error:(NSError *)error;
 @end
-
+/*************************************************************************************************/
+/*                               APICmdParamSourceDelegate                                       */
+/*************************************************************************************************/
+@protocol APICmdParamSourceDelegate <NSObject>
+@required
+- (void)paramsForApi:(RYBaseAPICmd *)manager;
+@end
 
 /*************************************************************************************************/
 /*                                    APIManagerInterceptor                                      */
@@ -185,14 +191,15 @@ static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
 @property (nonatomic, weak) NSObject<RYBaseAPICmdDelegate> *child;
 @property (nonatomic, weak) id<APICmdApiCallBackDelegate> delegate;
 @property (nonatomic, weak) id<APICmdInterceptor> interceptor;
+@property (nonatomic, weak) id<APICmdParamSourceDelegate> paramSource;
 
 @property (nonatomic, copy) id reformParams;
 @property (nonatomic, copy) NSString *path;
-@property (nonatomic, assign,readonly) NSInteger requestId;
-@property (nonatomic, copy,readonly) NSString *absouteUrlString;
-@property (nonatomic, copy,readonly) NSDictionary *cookie;
+@property (nonatomic, readonly, assign) NSInteger requestId;
+@property (nonatomic, readonly, copy) NSString *absouteUrlString;
+@property (nonatomic, readonly, copy) NSDictionary *cookie;
 /// 查询当前是否loading
-@property (nonatomic, assign,readonly) BOOL isLoading;
+@property (nonatomic, readonly, assign) BOOL isLoading;
 
 /// 开始请求数据
 - (void)loadData;
