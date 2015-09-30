@@ -27,6 +27,7 @@
 		4EA273B51BBBB85300AD199D /* RYBaseAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273AE1BBBB85300AD199D /* RYBaseAPICmd.m */; };
 		4EA273B61BBBB85300AD199D /* RYAPILogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273B11BBBB85300AD199D /* RYAPILogger.m */; };
 		4EA273B71BBBB85300AD199D /* RYAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273B41BBBB85300AD199D /* RYAPIManager.m */; };
+		4EA273BA1BBBDA2900AD199D /* 说明 in Resources */ = {isa = PBXBuildFile; fileRef = 4EA273B91BBBDA2900AD199D /* 说明 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		4EA273B11BBBB85300AD199D /* RYAPILogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYAPILogger.m; sourceTree = "<group>"; };
 		4EA273B31BBBB85300AD199D /* RYAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYAPIManager.h; sourceTree = "<group>"; };
 		4EA273B41BBBB85300AD199D /* RYAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYAPIManager.m; sourceTree = "<group>"; };
+		4EA273B91BBBDA2900AD199D /* 说明 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "说明"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		4E2CACDA1B5F731B00AC0E94 /* RYHttpClientDemo */ = {
 			isa = PBXGroup;
 			children = (
+				4EA273B81BBBD9F500AD199D /* Demo说明 */,
 				4EA273A71BBBB85300AD199D /* NetworkCenter */,
 				4E2CAD0D1B5F7CC100AC0E94 /* AFNetworking */,
 				4E2CACDF1B5F731B00AC0E94 /* AppDelegate.h */,
@@ -258,6 +261,14 @@
 			path = APIManager;
 			sourceTree = "<group>";
 		};
+		4EA273B81BBBD9F500AD199D /* Demo说明 */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273B91BBBDA2900AD199D /* 说明 */,
+			);
+			name = "Demo说明";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -338,6 +349,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EA273BA1BBBDA2900AD199D /* 说明 in Resources */,
 				4E2CACE71B5F731B00AC0E94 /* Main.storyboard in Resources */,
 				4E2CACEC1B5F731B00AC0E94 /* LaunchScreen.xib in Resources */,
 				4E2CACE91B5F731B00AC0E94 /* Images.xcassets in Resources */,
