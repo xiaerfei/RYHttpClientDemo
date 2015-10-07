@@ -20,8 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.itemListAPICmd.path = @"appforum/cheyouhome/?deviceid=000000000000000";
     [[RYAPIManager manager] performCmd:self.itemListAPICmd];
     
 }
@@ -47,6 +45,7 @@
 {
     if (!_itemListAPICmd) {
         _itemListAPICmd = [[ItemListAPICmd alloc] init];
+        _itemListAPICmd.path = @"appforum/cheyouhome/?deviceid=000000000000000";
         _itemListAPICmd.delegate = self;
     }
     return _itemListAPICmd;
