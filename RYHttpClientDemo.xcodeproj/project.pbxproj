@@ -14,8 +14,6 @@
 		4E2CACE91B5F731B00AC0E94 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E2CACE81B5F731B00AC0E94 /* Images.xcassets */; };
 		4E2CACEC1B5F731B00AC0E94 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E2CACEA1B5F731B00AC0E94 /* LaunchScreen.xib */; };
 		4E2CACF81B5F731B00AC0E94 /* RYHttpClientDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CACF71B5F731B00AC0E94 /* RYHttpClientDemoTests.m */; };
-		4E2CAD071B5F73B500AC0E94 /* RYAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD061B5F73B500AC0E94 /* RYAPIManager.m */; };
-		4E2CAD0C1B5F743E00AC0E94 /* RYBaseAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD0B1B5F743E00AC0E94 /* RYBaseAPICmd.m */; };
 		4E2CAD211B5F7CC100AC0E94 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD0F1B5F7CC100AC0E94 /* AFHTTPRequestOperation.m */; };
 		4E2CAD221B5F7CC100AC0E94 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD111B5F7CC100AC0E94 /* AFHTTPRequestOperationManager.m */; };
 		4E2CAD231B5F7CC100AC0E94 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD131B5F7CC100AC0E94 /* AFHTTPSessionManager.m */; };
@@ -26,6 +24,10 @@
 		4E2CAD281B5F7CC100AC0E94 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD1E1B5F7CC100AC0E94 /* AFURLResponseSerialization.m */; };
 		4E2CAD291B5F7CC100AC0E94 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD201B5F7CC100AC0E94 /* AFURLSessionManager.m */; };
 		4E2CAD2C1B5F8CE700AC0E94 /* ItemListAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD2B1B5F8CE700AC0E94 /* ItemListAPICmd.m */; };
+		4EA273B51BBBB85300AD199D /* RYBaseAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273AE1BBBB85300AD199D /* RYBaseAPICmd.m */; };
+		4EA273B61BBBB85300AD199D /* RYAPILogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273B11BBBB85300AD199D /* RYAPILogger.m */; };
+		4EA273B71BBBB85300AD199D /* RYAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273B41BBBB85300AD199D /* RYAPIManager.m */; };
+		4EA273BA1BBBDA2900AD199D /* 说明 in Resources */ = {isa = PBXBuildFile; fileRef = 4EA273B91BBBDA2900AD199D /* 说明 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,10 +54,6 @@
 		4E2CACF11B5F731B00AC0E94 /* RYHttpClientDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RYHttpClientDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E2CACF61B5F731B00AC0E94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E2CACF71B5F731B00AC0E94 /* RYHttpClientDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RYHttpClientDemoTests.m; sourceTree = "<group>"; };
-		4E2CAD051B5F73B500AC0E94 /* RYAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RYAPIManager.h; path = RYNetworking/APIManager/RYAPIManager.h; sourceTree = "<group>"; };
-		4E2CAD061B5F73B500AC0E94 /* RYAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RYAPIManager.m; path = RYNetworking/APIManager/RYAPIManager.m; sourceTree = "<group>"; };
-		4E2CAD0A1B5F743E00AC0E94 /* RYBaseAPICmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RYBaseAPICmd.h; path = RYNetworking/APICmd/RYBaseAPICmd.h; sourceTree = "<group>"; };
-		4E2CAD0B1B5F743E00AC0E94 /* RYBaseAPICmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RYBaseAPICmd.m; path = RYNetworking/APICmd/RYBaseAPICmd.m; sourceTree = "<group>"; };
 		4E2CAD0E1B5F7CC100AC0E94 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		4E2CAD0F1B5F7CC100AC0E94 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		4E2CAD101B5F7CC100AC0E94 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -77,6 +75,13 @@
 		4E2CAD201B5F7CC100AC0E94 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		4E2CAD2A1B5F8CE700AC0E94 /* ItemListAPICmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemListAPICmd.h; sourceTree = "<group>"; };
 		4E2CAD2B1B5F8CE700AC0E94 /* ItemListAPICmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemListAPICmd.m; sourceTree = "<group>"; };
+		4EA273AD1BBBB85300AD199D /* RYBaseAPICmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYBaseAPICmd.h; sourceTree = "<group>"; };
+		4EA273AE1BBBB85300AD199D /* RYBaseAPICmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYBaseAPICmd.m; sourceTree = "<group>"; };
+		4EA273B01BBBB85300AD199D /* RYAPILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYAPILogger.h; sourceTree = "<group>"; };
+		4EA273B11BBBB85300AD199D /* RYAPILogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYAPILogger.m; sourceTree = "<group>"; };
+		4EA273B31BBBB85300AD199D /* RYAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYAPIManager.h; sourceTree = "<group>"; };
+		4EA273B41BBBB85300AD199D /* RYAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYAPIManager.m; sourceTree = "<group>"; };
+		4EA273B91BBBDA2900AD199D /* 说明 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "说明"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,8 +123,9 @@
 		4E2CACDA1B5F731B00AC0E94 /* RYHttpClientDemo */ = {
 			isa = PBXGroup;
 			children = (
+				4EA273B81BBBD9F500AD199D /* Demo说明 */,
+				4EA273A71BBBB85300AD199D /* NetworkCenter */,
 				4E2CAD0D1B5F7CC100AC0E94 /* AFNetworking */,
-				4E2CAD011B5F732500AC0E94 /* RYNetworking */,
 				4E2CACDF1B5F731B00AC0E94 /* AppDelegate.h */,
 				4E2CACE01B5F731B00AC0E94 /* AppDelegate.m */,
 				4E2CACE21B5F731B00AC0E94 /* ViewController.h */,
@@ -160,33 +166,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4E2CAD011B5F732500AC0E94 /* RYNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				4E2CAD091B5F740B00AC0E94 /* BaseAPICmd */,
-				4E2CAD081B5F73BE00AC0E94 /* APIManager */,
-			);
-			name = RYNetworking;
-			sourceTree = "<group>";
-		};
-		4E2CAD081B5F73BE00AC0E94 /* APIManager */ = {
-			isa = PBXGroup;
-			children = (
-				4E2CAD051B5F73B500AC0E94 /* RYAPIManager.h */,
-				4E2CAD061B5F73B500AC0E94 /* RYAPIManager.m */,
-			);
-			name = APIManager;
-			sourceTree = "<group>";
-		};
-		4E2CAD091B5F740B00AC0E94 /* BaseAPICmd */ = {
-			isa = PBXGroup;
-			children = (
-				4E2CAD0A1B5F743E00AC0E94 /* RYBaseAPICmd.h */,
-				4E2CAD0B1B5F743E00AC0E94 /* RYBaseAPICmd.m */,
-			);
-			name = BaseAPICmd;
-			sourceTree = "<group>";
-		};
 		4E2CAD0D1B5F7CC100AC0E94 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +190,83 @@
 				4E2CAD201B5F7CC100AC0E94 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		4EA273A71BBBB85300AD199D /* NetworkCenter */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273A81BBBB85300AD199D /* APIManagers */,
+				4EA273AA1BBBB85300AD199D /* Foundation */,
+			);
+			path = NetworkCenter;
+			sourceTree = "<group>";
+		};
+		4EA273A81BBBB85300AD199D /* APIManagers */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273A91BBBB85300AD199D /* BSAPIManagers */,
+			);
+			path = APIManagers;
+			sourceTree = "<group>";
+		};
+		4EA273A91BBBB85300AD199D /* BSAPIManagers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BSAPIManagers;
+			sourceTree = "<group>";
+		};
+		4EA273AA1BBBB85300AD199D /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273AB1BBBB85300AD199D /* RYNetworking */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		4EA273AB1BBBB85300AD199D /* RYNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273AC1BBBB85300AD199D /* APICmd */,
+				4EA273AF1BBBB85300AD199D /* APILogger */,
+				4EA273B21BBBB85300AD199D /* APIManager */,
+			);
+			path = RYNetworking;
+			sourceTree = "<group>";
+		};
+		4EA273AC1BBBB85300AD199D /* APICmd */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273AD1BBBB85300AD199D /* RYBaseAPICmd.h */,
+				4EA273AE1BBBB85300AD199D /* RYBaseAPICmd.m */,
+			);
+			path = APICmd;
+			sourceTree = "<group>";
+		};
+		4EA273AF1BBBB85300AD199D /* APILogger */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273B01BBBB85300AD199D /* RYAPILogger.h */,
+				4EA273B11BBBB85300AD199D /* RYAPILogger.m */,
+			);
+			path = APILogger;
+			sourceTree = "<group>";
+		};
+		4EA273B21BBBB85300AD199D /* APIManager */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273B31BBBB85300AD199D /* RYAPIManager.h */,
+				4EA273B41BBBB85300AD199D /* RYAPIManager.m */,
+			);
+			path = APIManager;
+			sourceTree = "<group>";
+		};
+		4EA273B81BBBD9F500AD199D /* Demo说明 */ = {
+			isa = PBXGroup;
+			children = (
+				4EA273B91BBBDA2900AD199D /* 说明 */,
+			);
+			name = "Demo说明";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,6 +349,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EA273BA1BBBDA2900AD199D /* 说明 in Resources */,
 				4E2CACE71B5F731B00AC0E94 /* Main.storyboard in Resources */,
 				4E2CACEC1B5F731B00AC0E94 /* LaunchScreen.xib in Resources */,
 				4E2CACE91B5F731B00AC0E94 /* Images.xcassets in Resources */,
@@ -320,13 +377,14 @@
 				4E2CAD271B5F7CC100AC0E94 /* AFURLRequestSerialization.m in Sources */,
 				4E2CACE41B5F731B00AC0E94 /* ViewController.m in Sources */,
 				4E2CAD281B5F7CC100AC0E94 /* AFURLResponseSerialization.m in Sources */,
-				4E2CAD071B5F73B500AC0E94 /* RYAPIManager.m in Sources */,
-				4E2CAD0C1B5F743E00AC0E94 /* RYBaseAPICmd.m in Sources */,
 				4E2CAD2C1B5F8CE700AC0E94 /* ItemListAPICmd.m in Sources */,
 				4E2CAD221B5F7CC100AC0E94 /* AFHTTPRequestOperationManager.m in Sources */,
+				4EA273B71BBBB85300AD199D /* RYAPIManager.m in Sources */,
+				4EA273B51BBBB85300AD199D /* RYBaseAPICmd.m in Sources */,
 				4E2CAD251B5F7CC100AC0E94 /* AFSecurityPolicy.m in Sources */,
 				4E2CACE11B5F731B00AC0E94 /* AppDelegate.m in Sources */,
 				4E2CACDE1B5F731B00AC0E94 /* main.m in Sources */,
+				4EA273B61BBBB85300AD199D /* RYAPILogger.m in Sources */,
 				4E2CAD231B5F7CC100AC0E94 /* AFHTTPSessionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +580,7 @@
 				4E2CACFD1B5F731B00AC0E94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4E2CACFE1B5F731B00AC0E94 /* Build configuration list for PBXNativeTarget "RYHttpClientDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +589,7 @@
 				4E2CAD001B5F731B00AC0E94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

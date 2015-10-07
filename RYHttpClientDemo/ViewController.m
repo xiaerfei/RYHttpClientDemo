@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "ItemListAPICmd.h"
-#import "RYAPIManager.h"
+
 
 @interface ViewController ()<APICmdApiCallBackDelegate>
 
@@ -18,9 +18,11 @@
 
 @implementation ViewController
 
+#pragma mark - Lift Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[RYAPIManager manager] performCmd:self.itemListAPICmd];
+    //开始请求数据
+    [self.itemListAPICmd loadData];
     
 }
 
@@ -29,12 +31,11 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - APICmdApiCallBackDelegate
-- (void)apiCmdDidSuccess:(RYBaseAPICmd *)RYBaseAPICmd responseData:(NSDictionary *)responseData
+- (void)apiCmdDidSuccess:(RYBaseAPICmd *)baseAPICmd responseData:(id)responseData
 {
-    NSLog(@"%@",responseData);
+    
 }
-
-- (void)apiCmdDidFailed:(RYBaseAPICmd *)RYBaseAPICmd error:(NSError *)error errorType:(RYBaseAPICmdErrorType)errorType
+- (void)apiCmdDidFailed:(RYBaseAPICmd *)baseAPICmd error:(NSError *)error
 {
     
 }
@@ -47,6 +48,7 @@
         _itemListAPICmd = [[ItemListAPICmd alloc] init];
         _itemListAPICmd.path = @"appforum/cheyouhome/?deviceid=000000000000000";
         _itemListAPICmd.delegate = self;
+        _itemListAPICmd.path = @"appforum/cheyouhome/?deviceid=000000000000000";
     }
     return _itemListAPICmd;
 }
