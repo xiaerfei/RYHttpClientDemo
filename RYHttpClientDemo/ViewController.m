@@ -10,7 +10,7 @@
 #import "ItemListAPICmd.h"
 
 
-@interface ViewController ()<APICmdApiCallBackDelegate>
+@interface ViewController ()<APICmdApiCallBackDelegate,APICmdParamSourceDelegate>
 
 @property (nonatomic,strong) ItemListAPICmd *itemListAPICmd;
 
@@ -39,6 +39,12 @@
 {
     
 }
+#pragma mark APICmdParamSourceDelegate
+- (NSDictionary *)paramsForApi:(RYBaseAPICmd *)manager
+{
+    
+    return nil;
+}
 
 #pragma mark - getters
 
@@ -48,7 +54,6 @@
         _itemListAPICmd = [[ItemListAPICmd alloc] init];
         _itemListAPICmd.path = @"appforum/cheyouhome/?deviceid=000000000000000";
         _itemListAPICmd.delegate = self;
-        _itemListAPICmd.path = @"appforum/cheyouhome/?deviceid=000000000000000";
     }
     return _itemListAPICmd;
 }

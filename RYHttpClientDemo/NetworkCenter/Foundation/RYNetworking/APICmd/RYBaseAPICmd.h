@@ -119,7 +119,7 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 };
 
 static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
-
+static NSString *const kReformParamArray         = @"ReformParamArray";
 
 /*************************************************************************************************/
 /*                                         RTAPIManager                                          */
@@ -135,7 +135,7 @@ static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
 - (NSString *)apiCmdDescription;
 
 @optional
-
+- (NSString *)methodName;
 - (NSString *)apiHost;
 - (NSDictionary *)apiCookie;
 - (BOOL)isCacelRequest;
@@ -154,9 +154,25 @@ static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
 /*************************************************************************************************/
 /*                               APICmdParamSourceDelegate                                       */
 /*************************************************************************************************/
+/*  获取 请求的参数写法  路径参数 ||
+ *  路径参数 " ||xxx " ：
+ *  如 api_v2/FundProduct/{fundProductId}/ExtAttribute
+ *  在XXXAPICmd 中 "- (NSString *)methodName" 的返回值 为：api_v2/FundProduct/ ||fundProductId /ExtAttribute
+ *  请求格式 @{@"||fundProductId":@"ueoieu642837425234"}
+ *
+ *  如果请求为POST API 和 上传中都有参数， API中的参数：路径参数同上   上传的参数前加":"，如：
+ *  api_v2/FundProduct/{fundProductId}/ExtAttribute
+ *  请求格式：@{@"||fundProductId":@"ueoieu642837425234", //路径参数
+ *                @":isCustomer":@(YES),                //POST上传参数
+ *     @":customerCompanyInfoId":@"ueoieu642837425234", //POST上传参数
+ *         @"DownloadMaterialId":@"ueoieu642837425234", //一般URL参数
+ *               @"MaterialName":@"xxxfile.docx"}       //一般URL参数
+ *
+ *  上传的数据为数组 则使用“kReformParamArray”作为key
+ */
 @protocol APICmdParamSourceDelegate <NSObject>
 @required
-- (void)paramsForApi:(RYBaseAPICmd *)manager;
+- (NSDictionary *)paramsForApi:(RYBaseAPICmd *)manager;
 @end
 
 /*************************************************************************************************/
