@@ -10,6 +10,8 @@
 
 @interface RYRequestGenerator : NSObject
 
++ (instancetype)sharedInstance;
+
 - (NSMutableURLRequest *)generateGETRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
 - (NSMutableURLRequest *)generatePOSTRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
 

@@ -7,6 +7,17 @@
 //
 
 #import "RYApiProxy.h"
+#import "AFNetworking.h"
+#import "RYRequestGenerator.h"
+
+@interface RYApiProxy ()
+
+@property (nonatomic, strong) NSNumber *recordedRequestId;
+@property (nonatomic, strong) NSMutableDictionary *dispatchTable;
+@property (nonatomic, strong) AFHTTPRequestOperationManager *operationManager;
+
+@end
+
 
 @implementation RYApiProxy
 
@@ -20,25 +31,98 @@
     return sharedInstance;
 }
 
-- (NSInteger)callGETNormalWithParams:(NSDictionary *)params url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail
+- (NSInteger)callGETNormalWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail
 {
-    return 0;
+    NSMutableURLRequest *request = [[RYRequestGenerator sharedInstance] generateNormalGETRequestWithRequestParams:params url:url serviceIdentifier:serviceIdentifier];
+    NSNumber *requestId = [self callApiWithRequest:request success:success fail:fail];
+    return requestId.integerValue;
 }
 
-- (NSInteger)callPOSTNormalWithParams:(NSDictionary *)params url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail
+- (NSInteger)callPOSTNormalWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail
 {
-    return 0;
+    NSMutableURLRequest *request = [[RYRequestGenerator sharedInstance] generateNormalPOSTRequestWithRequestParams:params url:url serviceIdentifier:serviceIdentifier];
+    NSNumber *requestId = [self callApiWithRequest:request success:success fail:fail];
+    return requestId.integerValue;
 }
 
 
-- (NSInteger)callGETWithParams:(NSDictionary *)params url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail
+- (NSInteger)callGETWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail
 {
-    return 0;
+    NSMutableURLRequest *request = [[RYRequestGenerator sharedInstance] generateGETRequestWithRequestParams:params url:url serviceIdentifier:serviceIdentifier];
+    NSNumber *requestId = [self callApiWithRequest:request success:success fail:fail];
+    return requestId.integerValue;
 }
 
-- (NSInteger)callPOSTWithParams:(NSDictionary *)params url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail
+- (NSInteger)callPOSTWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail
 {
-    return 0;
+    NSMutableURLRequest *request = [[RYRequestGenerator sharedInstance] generatePOSTRequestWithRequestParams:params url:url serviceIdentifier:serviceIdentifier];
+    NSNumber *requestId = [self callApiWithRequest:request success:success fail:fail];
+    return requestId.integerValue;
+}
+
+#pragma mark - private methods
+
+/** 这个函数存在的意义在于，如果将来要把AFNetworking换掉，只要修改这个函数的实现即可。 */
+- (NSNumber *)callApiWithRequest:(NSMutableURLRequest *)request success:(RYCallback)success fail:(RYCallback)fail
+{
+    // 之所以不用getter，是因为如果放到getter里面的话，每次调用self.recordedRequestId的时候值就都变了，违背了getter的初衷
+    NSNumber *requestId = [self generateRequestId];
+    
+    AFHTTPRequestOperation *httpRequestOperation = [self.operationManager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AFHTTPRequestOperation *storedOperation = self.dispatchTable[requestId];
+        if (storedOperation == nil) {
+            // 如果这个operation是被cancel的，那就不用处理回调了。
+            return;
+        } else {
+            [self.dispatchTable removeObjectForKey:requestId];
+        }
+        success?success(responseObject):nil;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        AFHTTPRequestOperation *storedOperation = self.dispatchTable[requestId];
+        if (storedOperation == nil) {
+            // 如果这个operation是被cancel的，那就不用处理回调了。
+            return;
+        } else {
+            [self.dispatchTable removeObjectForKey:requestId];
+        }
+        fail?fail(operation.responseObject):nil;
+    }];
+    
+    self.dispatchTable[requestId] = httpRequestOperation;
+    [[self.operationManager operationQueue] addOperation:httpRequestOperation];
+    return requestId;
+}
+
+- (NSNumber *)generateRequestId
+{
+    if (_recordedRequestId == nil) {
+        _recordedRequestId = @(1);
+    } else {
+        if ([_recordedRequestId integerValue] == NSIntegerMax) {
+            _recordedRequestId = @(1);
+        } else {
+            _recordedRequestId = @([_recordedRequestId integerValue] + 1);
+        }
+    }
+    return _recordedRequestId;
+}
+
+#pragma mark - getters and setters
+- (NSMutableDictionary *)dispatchTable
+{
+    if (_dispatchTable == nil) {
+        _dispatchTable = [[NSMutableDictionary alloc] init];
+    }
+    return _dispatchTable;
+}
+
+- (AFHTTPRequestOperationManager *)operationManager
+{
+    if (_operationManager == nil) {
+        _operationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:nil];
+        _operationManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    }
+    return _operationManager;
 }
 
 @end

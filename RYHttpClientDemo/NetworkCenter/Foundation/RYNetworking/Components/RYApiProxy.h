@@ -16,10 +16,10 @@ typedef void(^RYCallback)(RYURLResponse *response);
 
 + (instancetype)sharedInstance;
 
-- (NSInteger)callGETNormalWithParams:(NSDictionary *)params url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
-- (NSInteger)callPOSTNormalWithParams:(NSDictionary *)params url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
+- (NSInteger)callGETNormalWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
+- (NSInteger)callPOSTNormalWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
 
-- (NSInteger)callGETWithParams:(NSDictionary *)params url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
-- (NSInteger)callPOSTWithParams:(NSDictionary *)params url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
+- (NSInteger)callGETWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
+- (NSInteger)callPOSTWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
 
 @end
