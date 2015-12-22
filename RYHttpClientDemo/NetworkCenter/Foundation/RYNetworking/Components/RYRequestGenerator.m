@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import "RYBaseAPICmd.h"
 #import "RYServiceFactory.h"
-
+#import "RYAPILogger.h"
 #import "NSURLRequest+RYNetworkingMethods.h"
 
 @interface RYRequestGenerator ()
@@ -28,48 +28,50 @@
     dispatch_once(&onceToken, ^{
         sharedInstance = [[RYRequestGenerator alloc] init];
     });
-    return sharedInstance;
+    return sharedInstance; 
 }
 
 - (NSMutableURLRequest *)generateGETRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier
 {
     RYService *service = [[RYServiceFactory sharedInstance] serviceWithIdentifier:serviceIdentifier];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",service.apiBaseUrl,url];
-    NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"GET" URLString:urlString parameters:nil error:NULL];
-    request.timeoutInterval = kNetworkingTimeoutSeconds;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kNetworkingTimeoutSeconds];
+    request.HTTPMethod = @"GET";
     NSDictionary *restfulHeader = [self commRESTHeadersWithService:service];
     [restfulHeader enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [request setValue:obj forHTTPHeaderField:key];
     }];
     request.requestParams = requestParams;
+    [RYAPILogger logDebugInfoWithRequest:request apiName:url service:service requestParams:requestParams httpMethod:@"GET"];
     return request;
 }
 - (NSMutableURLRequest *)generatePOSTRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier
 {
     RYService *service = [[RYServiceFactory sharedInstance] serviceWithIdentifier:serviceIdentifier];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",service.apiBaseUrl,url];
-    NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"POST" URLString:urlString parameters:requestParams error:NULL];
-    request.timeoutInterval = kNetworkingTimeoutSeconds;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kNetworkingTimeoutSeconds];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:requestParams options:NSJSONWritingPrettyPrinted error:NULL];
     NSDictionary *restfulHeader = [self commRESTHeadersWithService:service];
     [restfulHeader enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [request setValue:obj forHTTPHeaderField:key];
     }];
     request.requestParams = requestParams;
+    [RYAPILogger logDebugInfoWithRequest:request apiName:url service:service requestParams:requestParams httpMethod:@"POST"];
     return request;
 }
 
 - (NSMutableURLRequest *)generateNormalGETRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kNetworkingTimeoutSeconds];
-    request.HTTPMethod = @"GET";
+    NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"GET" URLString:url parameters:nil error:NULL];
+    request.timeoutInterval = kNetworkingTimeoutSeconds;
     request.requestParams = requestParams;
     return request;
 }
 - (NSMutableURLRequest *)generateNormalPOSTRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kNetworkingTimeoutSeconds];
-    request.HTTPMethod = @"POST";
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:requestParams options:NSJSONWritingPrettyPrinted error:NULL];
+    NSMutableURLRequest *request = [self.httpRequestSerializer requestWithMethod:@"POST" URLString:url parameters:requestParams error:NULL];
+    request.timeoutInterval = kNetworkingTimeoutSeconds;
     request.requestParams = requestParams;
     return request;
 }

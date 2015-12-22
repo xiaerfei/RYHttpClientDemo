@@ -22,4 +22,8 @@ typedef void(^RYCallback)(RYURLResponse *response);
 - (NSInteger)callGETWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
 - (NSInteger)callPOSTWithParams:(NSDictionary *)params serviceIdentifier:(NSString *)serviceIdentifier url:(NSString *)url success:(RYCallback)success fail:(RYCallback)fail;
 
+
+- (void)cancelRequestWithRequestID:(NSNumber *)requestID;
+- (void)cancelRequestWithRequestIDList:(NSArray *)requestIDList;
+
 @end

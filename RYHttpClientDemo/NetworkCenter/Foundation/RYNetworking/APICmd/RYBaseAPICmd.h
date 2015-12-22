@@ -105,17 +105,21 @@
 
 
 #import <Foundation/Foundation.h>
+#import "RYURLResponse.h"
 
 @class RYBaseAPICmd;
 typedef NS_ENUM (NSUInteger, RYBaseAPICmdRequestType){
     RYBaseAPICmdRequestTypeGet,
     RYBaseAPICmdRequestTypePost,
+    RYBaseAPICmdRequestTypeGetNormal,
+    RYBaseAPICmdRequestTypePostNormal,
 };
 
 typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
     RYBaseAPICmdErrorTypeDefault,       //没有产生过API请求，这个是manager的默认状态。
     RYBaseAPICmdErrorTypeTimeout,       //请求超时。设置的是20秒超时。
-    RYBaseAPICmdErrorTypeNoNetWork      //网络不通。在调用API之前会判断一下当前网络是否通畅，这个也是在调用API之前验证的，和上面超时的状态是有区别的。
+    RYBaseAPICmdErrorTypeNoNetWork,     //网络不通。在调用API之前会判断一下当前网络是否通畅，这个也是在调用API之前验证的，和上面超时的状态是有区别的。
+    RYAPIManagerErrorTypeNoContent,     //API请求成功但返回数据不正确。如果回调数据验证函数返回值为NO，manager的状态就会是这个。
 };
 
 static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
@@ -136,8 +140,7 @@ static NSString *const kReformParamArray         = @"ReformParamArray";
 
 @optional
 - (NSString *)methodName;
-- (NSString *)apiHost;
-- (NSDictionary *)apiCookie;
+- (NSString *)serviceIdentifier;
 - (BOOL)isCacelRequest;
 
 @end
@@ -148,8 +151,8 @@ static NSString *const kReformParamArray         = @"ReformParamArray";
 //api回调 返回数据，由controller或者持有者实现
 @protocol APICmdApiCallBackDelegate <NSObject>
 @required
-- (void)apiCmdDidSuccess:(RYBaseAPICmd *)baseAPICmd responseData:(id)responseData;
-- (void)apiCmdDidFailed:(RYBaseAPICmd *)baseAPICmd error:(NSError *)error;
+- (void)apiCmdDidSuccess:(RYBaseAPICmd *)baseAPICmd response:(RYURLResponse *)response;
+- (void)apiCmdDidFailed:(RYBaseAPICmd *)baseAPICmd errorType:(RYBaseAPICmdErrorType)errorType;
 @end
 /*************************************************************************************************/
 /*                               APICmdParamSourceDelegate                                       */
@@ -189,11 +192,11 @@ static NSString *const kReformParamArray         = @"ReformParamArray";
 
 - (void)apiCmdStartLoadData:(RYBaseAPICmd *)apiCmd;
 
-- (void)apiCmd:(RYBaseAPICmd *)apiCmd beforePerformSuccessWithResponse:(NSURLResponse *)response;
-- (void)apiCmd:(RYBaseAPICmd *)apiCmd afterPerformSuccessWithResponse:(NSURLResponse *)response;
+- (void)apiCmd:(RYBaseAPICmd *)apiCmd beforePerformSuccessWithResponse:(RYURLResponse *)response;
+- (void)apiCmd:(RYBaseAPICmd *)apiCmd afterPerformSuccessWithResponse:(RYURLResponse *)response;
 
-- (void)apiCmd:(RYBaseAPICmd *)apiCmd beforePerformFailWithResponse:(NSURLResponse *)response;
-- (void)apiCmd:(RYBaseAPICmd *)apiCmd afterPerformFailWithResponse:(NSURLResponse *)response;
+- (void)apiCmd:(RYBaseAPICmd *)apiCmd beforePerformFailWithResponse:(RYURLResponse *)response;
+- (void)apiCmd:(RYBaseAPICmd *)apiCmd afterPerformFailWithResponse:(RYURLResponse *)response;
 
 - (BOOL)apiCmd:(RYBaseAPICmd *)apiCmd shouldCallAPIWithParams:(NSDictionary *)params;
 - (void)apiCmd:(RYBaseAPICmd *)apiCmd afterCallingAPIWithParams:(NSDictionary *)params;
@@ -214,6 +217,7 @@ static NSString *const kReformParamArray         = @"ReformParamArray";
 @property (nonatomic, readonly, assign) NSInteger requestId;
 @property (nonatomic, readonly, copy) NSString *absouteUrlString;
 @property (nonatomic, readonly, copy) NSDictionary *cookie;
+@property (nonatomic, readonly, copy) NSString *serviceIdentifier;
 /// 查询当前是否loading
 @property (nonatomic, readonly, assign) BOOL isLoading;
 

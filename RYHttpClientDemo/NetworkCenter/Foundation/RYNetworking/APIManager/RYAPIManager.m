@@ -10,6 +10,22 @@
 #import "RYBaseAPICmd.h"
 #import "AFNetworking.h"
 #import "RYAPILogger.h"
+#import "RYApiProxy.h"
+#import "RYURLResponse.h"
+
+#define RYCallAPI(REQUEST_METHOD, REQUEST_ID)                                                       \
+{                                                                                       \
+__weak __typeof(baseAPICmd) weakBaseAPICmd = baseAPICmd;                                          \
+REQUEST_ID = [[RYApiProxy sharedInstance] call##REQUEST_METHOD##WithParams:baseAPICmd.reformParams serviceIdentifier:baseAPICmd.serviceIdentifier url:urlString success:^(RYURLResponse *response) { \
+__strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
+[self successedOnCallingAPI:response baseAPICmd:strongBaseAPICmd];                                          \
+} fail:^(RYURLResponse *response) {                                                \
+__strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
+[self failedOnCallingAPI:response withErrorType:RYBaseAPICmdErrorTypeDefault baseAPICmd:strongBaseAPICmd];  \
+}];                                                                                 \
+[self.requestIdList addObject:@(REQUEST_ID)];                                          \
+}
+
 
 @interface RYAPIManager ()
 
@@ -17,6 +33,7 @@
 @property (nonatomic, strong) NSNumber *recordedRequestId;
 @property (nonatomic, strong) AFHTTPRequestOperationManager *httpRequestOperationManager;
 
+@property (nonatomic, strong) NSMutableArray *requestIdList;
 @end
 
 @implementation RYAPIManager
@@ -42,11 +59,16 @@
         if ([self isReachable]) {
             switch (baseAPICmd.child.requestType) {
                 case RYBaseAPICmdRequestTypeGet:
-                    requestId = [self callGETWithParams:baseAPICmd.reformParams urlString:urlString baseAPICmd:baseAPICmd];
-                    
+                    RYCallAPI(GET, requestId);
                     break;
                 case RYBaseAPICmdRequestTypePost:
-                    requestId = [self callPOSTWithParams:baseAPICmd.reformParams urlString:urlString baseAPICmd:baseAPICmd];
+                    RYCallAPI(POST, requestId);
+                    break;
+                case RYBaseAPICmdRequestTypeGetNormal:
+                    RYCallAPI(GETNormal, requestId);
+                    break;
+                case RYBaseAPICmdRequestTypePostNormal:
+                    RYCallAPI(POSTNormal, requestId);
                     break;
                 default:
                     break;
@@ -55,8 +77,8 @@
             if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformFailWithResponse:)]) {
                 [baseAPICmd.interceptor apiCmd:baseAPICmd beforePerformFailWithResponse:nil];
             }
-            if ([baseAPICmd.delegate respondsToSelector:@selector(apiCmdDidFailed:error:)]) {
-                [baseAPICmd.delegate apiCmdDidFailed:baseAPICmd error:nil];
+            if ([baseAPICmd.delegate respondsToSelector:@selector(apiCmdDidFailed:errorType:)]) {
+                [baseAPICmd.delegate apiCmdDidFailed:baseAPICmd errorType:RYBaseAPICmdErrorTypeNoNetWork];
             }
             if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformFailWithResponse:)]) {
                 [baseAPICmd.interceptor apiCmd:baseAPICmd afterPerformFailWithResponse:nil];
@@ -68,23 +90,14 @@
 
 - (void)cancelRequestWithRequestID:(NSInteger)requestID
 {
-    AFHTTPRequestOperation *operation = self.dispatchTable[@(requestID)];
-    [operation cancel];
-    [self.dispatchTable removeObjectForKey:@(requestID)];
+    [self removeRequestIdWithRequestID:requestID];
+    [[RYApiProxy sharedInstance] cancelRequestWithRequestID:@(requestID)];
 }
 
 - (void)cancelAllRequest
 {
-    for (NSNumber *requestId in self.dispatchTable.allKeys) {
-        [self cancelRequestWithRequestID:[requestId integerValue]];
-    }
-}
-
-- (void)cancelRequestWithRequestIDList:(NSArray *)requestIDList
-{
-    for (NSNumber *requestId in requestIDList) {
-        [self cancelRequestWithRequestID:[requestId integerValue]];
-    }
+    [[RYApiProxy sharedInstance] cancelRequestWithRequestIDList:self.requestIdList];
+    [self.requestIdList removeAllObjects];
 }
 
 
@@ -97,138 +110,55 @@
 }
 
 #pragma mark - APICall
-- (NSInteger)callGETWithParams:(id)params urlString:(NSString *)urlString baseAPICmd:(RYBaseAPICmd *)baseAPICmd
+
+- (void)successedOnCallingAPI:(RYURLResponse *)response baseAPICmd:(RYBaseAPICmd *)baseAPICmd
 {
-    NSNumber *requestId = [self generateRequestId];
-    __weak __typeof(baseAPICmd) weakBaseAPICmd = baseAPICmd;
-    AFHTTPRequestOperation *operation = [self.httpRequestOperationManager GET:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;
-        strongBaseAPICmd.reformParams = nil;
-        AFHTTPRequestOperation *storedOperation = self.dispatchTable[requestId];
-        if (storedOperation == nil) {
-            // 如果这个operation是被cancel的，那就不用处理回调了。
-            return;
-        } else {
-            // 请求已经完成，将requestId移除
-            [self.dispatchTable removeObjectForKey:requestId];
+    [self removeRequestIdWithRequestID:response.requestId];
+    if (response.content) {
+        if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformSuccessWithResponse:)]) {
+            [baseAPICmd.interceptor apiCmd:baseAPICmd beforePerformSuccessWithResponse:response];
         }
-#ifdef DEBUGLOGGER
-        [RYAPILogger logDebugInfoWithURL:urlString requestParams:params responseParams:responseObject httpMethod:@"GET" requestId:requestId apiCmdDescription:strongBaseAPICmd.child.apiCmdDescription apiName:NSStringFromClass([strongBaseAPICmd class])];
-#endif
-        if ([strongBaseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformSuccessWithResponse:)]) {
-            [strongBaseAPICmd.interceptor apiCmd:strongBaseAPICmd beforePerformSuccessWithResponse:operation.response];
+        if ([baseAPICmd.delegate respondsToSelector:@selector(apiCmdDidSuccess:response:)]) {
+            [baseAPICmd.delegate apiCmdDidSuccess:baseAPICmd response:response];
         }
-        if ([strongBaseAPICmd.delegate respondsToSelector:@selector(apiCmdDidSuccess:responseData:)]) {
-            [strongBaseAPICmd.delegate apiCmdDidSuccess:strongBaseAPICmd responseData:responseObject];
+        if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformSuccessWithResponse:)]) {
+            [baseAPICmd.interceptor apiCmd:baseAPICmd afterPerformSuccessWithResponse:response];
         }
-        if ([strongBaseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformSuccessWithResponse:)]) {
-            [strongBaseAPICmd.interceptor apiCmd:strongBaseAPICmd afterPerformSuccessWithResponse:operation.response];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;
-        strongBaseAPICmd.reformParams = nil;
-        AFHTTPRequestOperation *storedOperation = self.dispatchTable[requestId];
-        if (storedOperation == nil) {
-            // 如果这个operation是被cancel的，那就不用处理回调了。
-            return;
-        } else {
-            [self.dispatchTable removeObjectForKey:requestId];
-        }
-#ifdef DEBUGLOGGER
-        [RYAPILogger logDebugInfoWithURL:urlString requestParams:params httpMethod:@"GET" error:error requestId:requestId apiCmdDescription:strongBaseAPICmd.child.apiCmdDescription apiName:NSStringFromClass([strongBaseAPICmd class])];
-        NSLog(@"%@",[[NSString alloc] initWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding]);
-#endif
-        if ([strongBaseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformFailWithResponse:)]) {
-            [strongBaseAPICmd.interceptor apiCmd:strongBaseAPICmd beforePerformFailWithResponse:operation.response];
-        }
-        if ([strongBaseAPICmd.delegate respondsToSelector:@selector(apiCmdDidFailed:error:)]) {
-            [strongBaseAPICmd.delegate apiCmdDidFailed:strongBaseAPICmd error:error];
-        }
-        if ([strongBaseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformFailWithResponse:)]) {
-            [strongBaseAPICmd.interceptor apiCmd:strongBaseAPICmd afterPerformFailWithResponse:operation.response];
-        }
-    }];
-    if (baseAPICmd.cookie) {
-        [(NSMutableURLRequest *)operation.request setAllHTTPHeaderFields:baseAPICmd.cookie];
+    } else {
+        [self failedOnCallingAPI:response withErrorType:RYAPIManagerErrorTypeNoContent baseAPICmd:baseAPICmd];
     }
-    self.dispatchTable[requestId] = operation;
-    return [requestId integerValue];
 }
 
-- (NSInteger)callPOSTWithParams:(id)params urlString:(NSString *)urlString baseAPICmd:(RYBaseAPICmd *)baseAPICmd
+- (void)failedOnCallingAPI:(RYURLResponse *)response withErrorType:(RYBaseAPICmdErrorType)errorType baseAPICmd:(RYBaseAPICmd *)baseAPICmd
 {
-
-    NSNumber *requestId = [self generateRequestId];
-    __weak __typeof(baseAPICmd) weakBaseAPICmd = baseAPICmd;
-    AFHTTPRequestOperation *operation = [self.httpRequestOperationManager POST:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;
-        strongBaseAPICmd.reformParams = nil;
-        AFHTTPRequestOperation *storedOperation = self.dispatchTable[requestId];
-        if (storedOperation == nil) {
-            // 如果这个operation是被cancel的，那就不用处理回调了。
-            return;
-        } else {
-            // 请求已经完成，将requestId移除
-            [self.dispatchTable removeObjectForKey:requestId];
-        }
-#ifdef DEBUGLOGGER
-        [RYAPILogger logDebugInfoWithURL:urlString requestParams:params responseParams:responseObject httpMethod:@"POST" requestId:requestId apiCmdDescription:strongBaseAPICmd.child.apiCmdDescription apiName:NSStringFromClass([strongBaseAPICmd class])];
-#endif
-        if ([strongBaseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformSuccessWithResponse:)]) {
-            [strongBaseAPICmd.interceptor apiCmd:strongBaseAPICmd beforePerformSuccessWithResponse:operation.response];
-        }
-        if ([strongBaseAPICmd.delegate respondsToSelector:@selector(apiCmdDidSuccess:responseData:)]) {
-            [strongBaseAPICmd.delegate apiCmdDidSuccess:strongBaseAPICmd responseData:responseObject];
-        }
-        if ([strongBaseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformSuccessWithResponse:)]) {
-            [strongBaseAPICmd.interceptor apiCmd:strongBaseAPICmd afterPerformSuccessWithResponse:operation.response];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;
-        strongBaseAPICmd.reformParams = nil;
-        AFHTTPRequestOperation *storedOperation = self.dispatchTable[requestId];
-        if (storedOperation == nil) {
-            // 如果这个operation是被cancel的，那就不用处理回调了。
-            return;
-        } else {
-            [self.dispatchTable removeObjectForKey:requestId];
-        }
-#ifdef DEBUGLOGGER
-        [RYAPILogger logDebugInfoWithURL:urlString requestParams:params httpMethod:@"POST" error:error requestId:requestId apiCmdDescription:strongBaseAPICmd.child.apiCmdDescription apiName:NSStringFromClass([strongBaseAPICmd class])];
-        NSLog(@"%@",[[NSString alloc] initWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding]);
-#endif
-        if ([strongBaseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformFailWithResponse:)]) {
-            [strongBaseAPICmd.interceptor apiCmd:strongBaseAPICmd beforePerformFailWithResponse:operation.response];
-        }
-        if ([strongBaseAPICmd.delegate respondsToSelector:@selector(apiCmdDidFailed:error:)]) {
-            [strongBaseAPICmd.delegate apiCmdDidFailed:strongBaseAPICmd error:error];
-        }
-        if ([strongBaseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformFailWithResponse:)]) {
-            [strongBaseAPICmd.interceptor apiCmd:strongBaseAPICmd afterPerformFailWithResponse:operation.response];
-        }
-    }];
-    if (baseAPICmd.cookie) {
-        [(NSMutableURLRequest *)operation.request setAllHTTPHeaderFields:baseAPICmd.cookie];
+    [self removeRequestIdWithRequestID:response.requestId];
+    if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformFailWithResponse:)]) {
+        [baseAPICmd.interceptor apiCmd:baseAPICmd beforePerformFailWithResponse:response];
     }
-    self.dispatchTable[requestId] = operation;
-    return [requestId integerValue];
+    if ([baseAPICmd.delegate respondsToSelector:@selector(apiCmdDidFailed:errorType:)]) {
+        [baseAPICmd.delegate apiCmdDidFailed:baseAPICmd errorType:errorType];
+    }
+    if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformFailWithResponse:)]) {
+        [baseAPICmd.interceptor apiCmd:baseAPICmd afterPerformFailWithResponse:response];
+    }
 }
-
 
 #pragma mark - private methods
-- (NSNumber *)generateRequestId
+
+- (void)removeRequestIdWithRequestID:(NSInteger)requestId
 {
-    if (_recordedRequestId == nil) {
-        _recordedRequestId = @(1);
-    } else {
-        if ([_recordedRequestId integerValue] == NSIntegerMax) {
-            _recordedRequestId = @(1);
-        } else {
-            _recordedRequestId = @([_recordedRequestId integerValue] + 1);
+    NSNumber *requestIDToRemove = nil;
+    for (NSNumber *storedRequestId in self.requestIdList) {
+        if ([storedRequestId integerValue] == requestId) {
+            requestIDToRemove = storedRequestId;
+            break;
         }
     }
-    return _recordedRequestId;
+    if (requestIDToRemove) {
+        [self.requestIdList removeObject:requestIDToRemove];
+    }
 }
+
 
 - (BOOL)isReachable
 {
