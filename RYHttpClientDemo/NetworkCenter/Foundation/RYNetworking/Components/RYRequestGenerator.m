@@ -20,7 +20,16 @@
 @end
 
 @implementation RYRequestGenerator
-
+#pragma mark - life cycle
++ (instancetype)sharedInstance
+{
+    static dispatch_once_t onceToken;
+    static RYRequestGenerator *sharedInstance = nil;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[RYRequestGenerator alloc] init];
+    });
+    return sharedInstance;
+}
 
 - (NSMutableURLRequest *)generateGETRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier
 {
@@ -54,7 +63,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kNetworkingTimeoutSeconds];
     request.HTTPMethod = @"GET";
     request.requestParams = requestParams;
-    return nil;
+    return request;
 }
 - (NSMutableURLRequest *)generateNormalPOSTRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier
 {
