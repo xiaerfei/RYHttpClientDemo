@@ -8,7 +8,6 @@
 
 #import "ItemListAPICmd.h"
 
-//appforum/cheyouhome/?deviceid=000000000000000
 
 @implementation ItemListAPICmd
 

@@ -78,8 +78,8 @@
 
 - (NSString *)serviceIdentifier
 {
-    if ([self.child respondsToSelector:@selector(serviceIdentifier)]) {
-        _serviceIdentifier = [self.child serviceIdentifier];
+    if ([self.child respondsToSelector:@selector(serviceType)]) {
+        _serviceIdentifier = [self.child serviceType];
     } else {
         _serviceIdentifier = kGenerateRequestService;
     }

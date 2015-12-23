@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E1F91911C2A769A0065BC53 /* ItemListAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1F91901C2A769A0065BC53 /* ItemListAPICmd.m */; };
 		4E2CACDE1B5F731B00AC0E94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CACDD1B5F731B00AC0E94 /* main.m */; };
 		4E2CACE11B5F731B00AC0E94 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CACE01B5F731B00AC0E94 /* AppDelegate.m */; };
 		4E2CACE41B5F731B00AC0E94 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CACE31B5F731B00AC0E94 /* ViewController.m */; };
@@ -23,7 +24,6 @@
 		4E2CAD271B5F7CC100AC0E94 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD1C1B5F7CC100AC0E94 /* AFURLRequestSerialization.m */; };
 		4E2CAD281B5F7CC100AC0E94 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD1E1B5F7CC100AC0E94 /* AFURLResponseSerialization.m */; };
 		4E2CAD291B5F7CC100AC0E94 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD201B5F7CC100AC0E94 /* AFURLSessionManager.m */; };
-		4E2CAD2C1B5F8CE700AC0E94 /* ItemListAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CAD2B1B5F8CE700AC0E94 /* ItemListAPICmd.m */; };
 		4EA273B51BBBB85300AD199D /* RYBaseAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273AE1BBBB85300AD199D /* RYBaseAPICmd.m */; };
 		4EA273B61BBBB85300AD199D /* RYAPILogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273B11BBBB85300AD199D /* RYAPILogger.m */; };
 		4EA273B71BBBB85300AD199D /* RYAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273B41BBBB85300AD199D /* RYAPIManager.m */; };
@@ -53,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E1F918F1C2A769A0065BC53 /* ItemListAPICmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemListAPICmd.h; sourceTree = "<group>"; };
+		4E1F91901C2A769A0065BC53 /* ItemListAPICmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemListAPICmd.m; sourceTree = "<group>"; };
 		4E2CACD81B5F731B00AC0E94 /* RYHttpClientDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RYHttpClientDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E2CACDC1B5F731B00AC0E94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E2CACDD1B5F731B00AC0E94 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -85,8 +87,6 @@
 		4E2CAD1E1B5F7CC100AC0E94 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		4E2CAD1F1B5F7CC100AC0E94 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		4E2CAD201B5F7CC100AC0E94 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		4E2CAD2A1B5F8CE700AC0E94 /* ItemListAPICmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemListAPICmd.h; sourceTree = "<group>"; };
-		4E2CAD2B1B5F8CE700AC0E94 /* ItemListAPICmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemListAPICmd.m; sourceTree = "<group>"; };
 		4EA273AD1BBBB85300AD199D /* RYBaseAPICmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYBaseAPICmd.h; sourceTree = "<group>"; };
 		4EA273AE1BBBB85300AD199D /* RYBaseAPICmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYBaseAPICmd.m; sourceTree = "<group>"; };
 		4EA273B01BBBB85300AD199D /* RYAPILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYAPILogger.h; sourceTree = "<group>"; };
@@ -168,8 +168,6 @@
 				4E2CACE21B5F731B00AC0E94 /* ViewController.h */,
 				4E2CACE31B5F731B00AC0E94 /* ViewController.m */,
 				4E2CACE51B5F731B00AC0E94 /* Main.storyboard */,
-				4E2CAD2A1B5F8CE700AC0E94 /* ItemListAPICmd.h */,
-				4E2CAD2B1B5F8CE700AC0E94 /* ItemListAPICmd.m */,
 				4E2CACE81B5F731B00AC0E94 /* Images.xcassets */,
 				4E2CACEA1B5F731B00AC0E94 /* LaunchScreen.xib */,
 				4E2CACDB1B5F731B00AC0E94 /* Supporting Files */,
@@ -249,6 +247,8 @@
 		4EA273A91BBBB85300AD199D /* BSAPIManagers */ = {
 			isa = PBXGroup;
 			children = (
+				4E1F918F1C2A769A0065BC53 /* ItemListAPICmd.h */,
+				4E1F91901C2A769A0065BC53 /* ItemListAPICmd.m */,
 			);
 			path = BSAPIManagers;
 			sourceTree = "<group>";
@@ -476,10 +476,10 @@
 				4EA93D2B1C28083D003EC468 /* RYServiceKeys.m in Sources */,
 				4E2CACE41B5F731B00AC0E94 /* ViewController.m in Sources */,
 				4EA93D251C2805B6003EC468 /* RYServiceFactory.m in Sources */,
+				4E1F91911C2A769A0065BC53 /* ItemListAPICmd.m in Sources */,
 				4E2CAD281B5F7CC100AC0E94 /* AFURLResponseSerialization.m in Sources */,
 				4EA93D111C27EC7A003EC468 /* NSDictionary+RYNetworkingMethods.m in Sources */,
 				4EA93D1B1C27FB4C003EC468 /* RYRequestGenerator.m in Sources */,
-				4E2CAD2C1B5F8CE700AC0E94 /* ItemListAPICmd.m in Sources */,
 				4EBCCA401C29534400C36544 /* NSMutableString+RYNetworkingMethods.m in Sources */,
 				4EA93D151C27F6C4003EC468 /* RYApiProxy.m in Sources */,
 				4E2CAD221B5F7CC100AC0E94 /* AFHTTPRequestOperationManager.m in Sources */,

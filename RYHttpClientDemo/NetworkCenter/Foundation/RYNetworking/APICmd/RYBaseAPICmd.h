@@ -135,12 +135,10 @@ static NSString *const kReformParamArray         = @"ReformParamArray";
 @required
 //返回请求的类型
 - (RYBaseAPICmdRequestType)requestType;
-//api功能描述
-- (NSString *)apiCmdDescription;
-
 @optional
+- (NSString *)apiCmdDescription;
 - (NSString *)methodName;
-- (NSString *)serviceIdentifier;
+- (NSString *)serviceType;
 - (BOOL)isCacelRequest;
 
 @end
@@ -163,11 +161,11 @@ static NSString *const kReformParamArray         = @"ReformParamArray";
  *  在XXXAPICmd 中 "- (NSString *)methodName" 的返回值 为：api_v2/FundProduct/ ||fundProductId /ExtAttribute
  *  请求格式 @{@"||fundProductId":@"ueoieu642837425234"}
  *
- *  如果请求为POST API 和 上传中都有参数， API中的参数：路径参数同上   上传的参数前加":"，如：
+ *  如果请求为POST API 和 上传中都有参数， API中的参数：路径参数同上   body参数前加":"，如：
  *  api_v2/FundProduct/{fundProductId}/ExtAttribute
  *  请求格式：@{@"||fundProductId":@"ueoieu642837425234", //路径参数
- *                @":isCustomer":@(YES),                //POST上传参数
- *     @":customerCompanyInfoId":@"ueoieu642837425234", //POST上传参数
+ *                @":isCustomer":@(YES),                //POST body参数参数
+ *     @":customerCompanyInfoId":@"ueoieu642837425234", //POST body参数参数
  *         @"DownloadMaterialId":@"ueoieu642837425234", //一般URL参数
  *               @"MaterialName":@"xxxfile.docx"}       //一般URL参数
  *

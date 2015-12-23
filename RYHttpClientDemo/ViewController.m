@@ -10,7 +10,7 @@
 #import "ItemListAPICmd.h"
 
 
-@interface ViewController ()<APICmdApiCallBackDelegate,APICmdParamSourceDelegate>
+@interface ViewController ()<APICmdApiCallBackDelegate,APICmdParamSourceDelegate,APICmdParamSourceDelegate>
 
 @property (nonatomic,strong) ItemListAPICmd *itemListAPICmd;
 
@@ -42,7 +42,9 @@
 #pragma mark APICmdParamSourceDelegate
 - (NSDictionary *)paramsForApi:(RYBaseAPICmd *)manager
 {
-    
+    if (self.itemListAPICmd == manager) {
+        return @{@"city":@"shanghai"};
+    }
     return nil;
 }
 
@@ -52,8 +54,8 @@
 {
     if (!_itemListAPICmd) {
         _itemListAPICmd = [[ItemListAPICmd alloc] init];
-        _itemListAPICmd.path = @"appforum/cheyouhome/?deviceid=000000000000000";
         _itemListAPICmd.delegate = self;
+        _itemListAPICmd.paramSource = self;
     }
     return _itemListAPICmd;
 }
