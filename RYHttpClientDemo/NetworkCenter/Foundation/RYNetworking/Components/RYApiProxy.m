@@ -96,7 +96,7 @@
                              resposeString:operation.responseString
                                    request:operation.request
                                      error:NULL];
-        RYURLResponse *response = [[RYURLResponse alloc] initWithResponseString:nil requestId:requestId request:request responseData:responseObject status:RYURLResponseStatusSuccess];
+        RYURLResponse *response = [[RYURLResponse alloc] initWithResponseString:operation.responseString requestId:requestId request:request responseData:responseObject status:RYURLResponseStatusSuccess];
         success?success(response):nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         AFHTTPRequestOperation *storedOperation = self.dispatchTable[requestId];
@@ -110,7 +110,7 @@
                                 resposeString:operation.responseString
                                       request:operation.request
                                         error:error];
-        RYURLResponse *response = [[RYURLResponse alloc] initWithResponseString:nil requestId:requestId request:request responseData:operation.responseObject error:error];
+        RYURLResponse *response = [[RYURLResponse alloc] initWithResponseString:operation.responseString requestId:requestId request:request responseData:operation.responseObject error:error];
         fail?fail(response):nil;
     }];
     
@@ -146,7 +146,7 @@
 {
     if (_operationManager == nil) {
         _operationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:nil];
-        _operationManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//        _operationManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
     return _operationManager;
 }

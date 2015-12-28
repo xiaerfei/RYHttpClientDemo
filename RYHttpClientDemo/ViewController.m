@@ -13,6 +13,11 @@
 @interface ViewController ()<APICmdApiCallBackDelegate,APICmdParamSourceDelegate,APICmdParamSourceDelegate>
 
 @property (nonatomic,strong) ItemListAPICmd *itemListAPICmd;
+@property (weak, nonatomic) IBOutlet UITextField *cityPinyin;
+@property (weak, nonatomic) IBOutlet UITextView *responseResult;
+
+- (IBAction)beginRequestAction:(id)sender;
+
 
 @end
 
@@ -21,9 +26,7 @@
 #pragma mark - Lift Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //开始请求数据
-    [self.itemListAPICmd loadData];
-    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,7 +36,7 @@
 #pragma mark - APICmdApiCallBackDelegate
 - (void)apiCmdDidSuccess:(RYBaseAPICmd *)baseAPICmd response:(RYURLResponse *)response
 {
-    
+    self.responseResult.text = response.contentString;
 }
 - (void)apiCmdDidFailed:(RYBaseAPICmd *)baseAPICmd errorType:(RYBaseAPICmdErrorType)errorType
 {
@@ -43,9 +46,16 @@
 - (NSDictionary *)paramsForApi:(RYBaseAPICmd *)manager
 {
     if (self.itemListAPICmd == manager) {
-        return @{@"city":@"shanghai"};
+        return @{@"city":self.cityPinyin.text};
     }
     return nil;
+}
+#pragma mark - event responses
+- (IBAction)beginRequestAction:(id)sender {
+    if (self.cityPinyin.text.length != 0) {
+        //开始请求数据
+        [self.itemListAPICmd loadData];
+    }
 }
 
 #pragma mark - getters
@@ -59,6 +69,7 @@
     }
     return _itemListAPICmd;
 }
+
 
 
 @end

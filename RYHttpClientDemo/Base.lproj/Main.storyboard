@@ -1,25 +1,98 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ajr-gq-NJ7">
+                                <rect key="frame" x="105" y="101" width="199" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="HJ7-BN-lty"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQP-CP-X6r">
+                                <rect key="frame" x="100" y="176" width="120" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="6uZ-4i-FJj"/>
+                                    <constraint firstAttribute="width" constant="120" id="v43-2S-xpi"/>
+                                </constraints>
+                                <state key="normal" title="开始请求">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="beginRequestAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lkH-2E-Zrt"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="城市天气预报" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5m-kL-fX1">
+                                <rect key="frame" x="109" y="50" width="102" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="RxA-Tc-Rth"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLg-D9-qvm">
+                                <rect key="frame" x="16" y="214" width="288" height="346"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="城市拼音：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BO2-4Z-H8p">
+                                <rect key="frame" x="10" y="105" width="85" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Gil-k3-viq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ajr-gq-NJ7" firstAttribute="centerY" secondItem="BO2-4Z-H8p" secondAttribute="centerY" id="3G4-xr-dHO"/>
+                            <constraint firstAttribute="centerX" secondItem="aQP-CP-X6r" secondAttribute="centerX" id="70N-xT-Tjl"/>
+                            <constraint firstItem="f5m-kL-fX1" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="30" id="8IM-2o-9Bh"/>
+                            <constraint firstItem="aQP-CP-X6r" firstAttribute="top" secondItem="ajr-gq-NJ7" secondAttribute="bottom" constant="45" id="B5Y-Sj-gRF"/>
+                            <constraint firstItem="oLg-D9-qvm" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="16" id="J6b-uI-fFo"/>
+                            <constraint firstItem="BO2-4Z-H8p" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="Lia-Ha-Wkm"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="oLg-D9-qvm" secondAttribute="bottom" constant="8" id="NhC-08-pMZ"/>
+                            <constraint firstItem="ajr-gq-NJ7" firstAttribute="leading" secondItem="BO2-4Z-H8p" secondAttribute="trailing" constant="10" id="Oy6-2q-fD7"/>
+                            <constraint firstAttribute="trailing" secondItem="oLg-D9-qvm" secondAttribute="trailing" constant="16" id="YqV-f3-HrX"/>
+                            <constraint firstItem="ajr-gq-NJ7" firstAttribute="top" secondItem="f5m-kL-fX1" secondAttribute="bottom" constant="30" id="beR-4Y-PeN"/>
+                            <constraint firstAttribute="trailing" secondItem="ajr-gq-NJ7" secondAttribute="trailing" constant="16" id="dq6-O1-Kqe"/>
+                            <constraint firstItem="ajr-gq-NJ7" firstAttribute="leading" secondItem="BO2-4Z-H8p" secondAttribute="trailing" constant="10" id="grq-1N-99z"/>
+                            <constraint firstAttribute="centerX" secondItem="f5m-kL-fX1" secondAttribute="centerX" id="hma-0W-kxb"/>
+                            <constraint firstItem="oLg-D9-qvm" firstAttribute="top" secondItem="aQP-CP-X6r" secondAttribute="bottom" constant="8" id="t9p-fa-iK5"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cityPinyin" destination="ajr-gq-NJ7" id="wVN-C7-D56"/>
+                        <outlet property="responseResult" destination="oLg-D9-qvm" id="qUO-Em-6sC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="418" y="480"/>
         </scene>
     </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

@@ -39,10 +39,8 @@
 - (NSString *)absouteUrlString
 {
     if ([self.paramSource respondsToSelector:@selector(paramsForApi:)]) {
-        NSString *url = nil;
-        
         // 解析参数：URL 以及 上传的参数
-        NSMutableString *urlStr = [[NSMutableString alloc] initWithString:self.child.methodName];
+        NSMutableString *methodName = [[NSMutableString alloc] initWithString:self.child.methodName];
         NSMutableDictionary *requestURLParam = [[NSMutableDictionary alloc] init];
         NSMutableDictionary *requestParam = [[NSMutableDictionary alloc] init];
 
@@ -50,8 +48,8 @@
         NSArray *requestArray = paramDict[kReformParamArray];
         [paramDict enumerateKeysAndObjectsUsingBlock:^(NSString *key, id value, BOOL *stop) {
             if ([key rangeOfString:@"||"].length) {
-                NSRange range = [urlStr rangeOfString:key];
-                [urlStr replaceCharactersInRange:range withString:value];
+                NSRange range = [methodName rangeOfString:key];
+                [methodName replaceCharactersInRange:range withString:value];
             } else if ([key rangeOfString:@":"].length) {
                 NSMutableString *valueKey = [NSMutableString stringWithString:key];
                 NSRange range = [valueKey rangeOfString:@":"];
@@ -62,14 +60,15 @@
             }
         }];
         
-        url = [NSString stringWithFormat:@"%@?%@",urlStr,[requestURLParam RY_urlParamsString]];
-        NSLog(@"url %@ \nrequestParam %@",url,requestParam);
         if (requestArray.count != 0) {
             self.reformParams = requestArray;
         } else {
             self.reformParams = requestParam;
         }
-        _absouteUrlString = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        NSString *methodNameURL = [NSString stringWithFormat:@"%@?%@",methodName,[requestURLParam RY_urlParamsString]];
+        
+        _absouteUrlString = [methodNameURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     } else {
         _absouteUrlString = [self.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
