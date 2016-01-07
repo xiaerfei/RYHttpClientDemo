@@ -122,9 +122,6 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
     RYAPIManagerErrorTypeNoContent,     //API请求成功但返回数据不正确。如果回调数据验证函数返回值为NO，manager的状态就会是这个。
 };
 
-static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
-static NSString *const kReformParamArray         = @"ReformParamArray";
-
 /*************************************************************************************************/
 /*                                         RTAPIManager                                          */
 /*************************************************************************************************/

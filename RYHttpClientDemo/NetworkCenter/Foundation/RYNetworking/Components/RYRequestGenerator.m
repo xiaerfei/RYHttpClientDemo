@@ -79,7 +79,7 @@
 - (NSDictionary *)commRESTHeadersWithService:(RYService *)service
 {
     NSMutableDictionary *headerDic = [NSMutableDictionary dictionaryWithDictionary:service.cookis];
-    [headerDic setValue:service.privateKey forKey:@"apikey"];
+    [headerDic setValue:service.privateKey  forKey:@"apikey"];
     [headerDic setValue:@"application/json" forKey:@"Accept"];
     [headerDic setValue:@"application/json" forKey:@"Content-Type"];
     return headerDic;

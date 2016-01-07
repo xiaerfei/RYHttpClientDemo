@@ -11,6 +11,7 @@
 #import "RYRequestGenerator.h"
 #import "RYURLResponse.h"
 #import "RYAPILogger.h"
+#import "RYNetworkingConfiguration.h"
 
 @interface RYApiProxy ()
 
@@ -146,7 +147,9 @@
 {
     if (_operationManager == nil) {
         _operationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:nil];
-//        _operationManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        _operationManager.operationQueue.maxConcurrentOperationCount = 10;
+        _operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        _operationManager.requestSerializer.timeoutInterval = kNetworkingTimeoutSeconds;
     }
     return _operationManager;
 }

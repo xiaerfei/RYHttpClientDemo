@@ -16,4 +16,8 @@ typedef NS_ENUM(NSUInteger, RYURLResponseStatus)
     RYURLResponseStatusErrorNoNetwork // 默认除了超时以外的错误都是无网络错误。
 };
 
+static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
+
+static NSString *const kReformParamArray        = @"ReformParamArray";
+
 #endif

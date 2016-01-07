@@ -12,11 +12,11 @@
 #import "RYServiceKeys.h"
 
 @interface RYBaseAPICmd ()
-@property (nonatomic, copy,readwrite) NSString *absouteUrlString;
-@property (nonatomic, assign,readwrite) NSInteger requestId;
-@property (nonatomic, copy,readwrite) NSDictionary *cookie;
-@property (nonatomic, copy,readwrite) NSString *serviceIdentifier;
-@property (nonatomic, assign,readwrite) BOOL isLoading;
+@property (nonatomic, copy,   readwrite) NSString     *absouteUrlString;
+@property (nonatomic, assign, readwrite) NSInteger    requestId;
+@property (nonatomic, copy,   readwrite) NSDictionary *cookie;
+@property (nonatomic, copy,   readwrite) NSString     *serviceIdentifier;
+@property (nonatomic, assign, readwrite) BOOL         isLoading;
 @end
 
 @implementation RYBaseAPICmd
@@ -67,7 +67,6 @@
         }
         
         NSString *methodNameURL = [NSString stringWithFormat:@"%@?%@",methodName,[requestURLParam RY_urlParamsString]];
-        
         _absouteUrlString = [methodNameURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     } else {
         _absouteUrlString = [self.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -84,7 +83,6 @@
     }
     return _serviceIdentifier;
 }
-
 /**
  *   @author xiaerfei, 15-09-08 11:09:14
  *
