@@ -29,10 +29,6 @@ __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
 
 @interface RYAPIManager ()
 
-@property (nonatomic, strong) NSMutableDictionary *dispatchTable;
-@property (nonatomic, strong) NSNumber *recordedRequestId;
-@property (nonatomic, strong) AFHTTPRequestOperationManager *httpRequestOperationManager;
-
 @property (nonatomic, strong) NSMutableArray *requestIdList;
 @end
 
@@ -103,8 +99,10 @@ __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
 
 - (BOOL)isLoadingWithRequestID:(NSInteger)requestID
 {
-    if (self.dispatchTable[@(requestID)]) {
-        return YES;
+    for (NSNumber *number in self.requestIdList) {
+        if (number.integerValue == requestID) {
+            return YES;
+        }
     }
     return NO;
 }
@@ -170,25 +168,12 @@ __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
 }
 
 #pragma mark - getters
-
-- (NSMutableDictionary *)dispatchTable
+- (NSMutableArray *)requestIdList
 {
-    if (!_dispatchTable) {
-        _dispatchTable = [[NSMutableDictionary alloc] init];
+    if (_requestIdList == nil) {
+        _requestIdList = [[NSMutableArray alloc] init];
     }
-    return _dispatchTable;
-}
-
-- (AFHTTPRequestOperationManager *)httpRequestOperationManager
-{
-    if (_httpRequestOperationManager == nil) {
-        _httpRequestOperationManager = [AFHTTPRequestOperationManager manager];
-        _httpRequestOperationManager.operationQueue.maxConcurrentOperationCount = 10;
-        _httpRequestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
-        _httpRequestOperationManager.requestSerializer.timeoutInterval = kNetworkingTimeoutSeconds;
-    }
-    return _httpRequestOperationManager;
-
+    return _requestIdList;
 }
 
 

@@ -57,7 +57,11 @@
 
 - (NSDictionary *)cookis
 {
-    NSArray *arcCookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"sessionCookies"]];
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"sessionCookies"];
+    if (data == nil) {
+        return nil;
+    }
+    NSArray *arcCookies = [NSKeyedUnarchiver unarchiveObjectWithData: data];
     
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     
