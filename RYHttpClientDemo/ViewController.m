@@ -14,7 +14,7 @@
 
 @property (nonatomic,strong) ItemListAPICmd *itemListAPICmd;
 @property (weak, nonatomic) IBOutlet UITextField *cityPinyin;
-@property (weak, nonatomic) IBOutlet UITextView *responseResult;
+@property (weak, nonatomic) IBOutlet UITextView  *responseResult;
 
 - (IBAction)beginRequestAction:(id)sender;
 
@@ -57,14 +57,14 @@
         [self.itemListAPICmd loadData];
     }
 }
-
+ 
 #pragma mark - getters
 
 - (ItemListAPICmd *)itemListAPICmd
 {
     if (!_itemListAPICmd) {
         _itemListAPICmd = [[ItemListAPICmd alloc] init];
-        _itemListAPICmd.delegate = self;
+        _itemListAPICmd.delegate    = self;
         _itemListAPICmd.paramSource = self;
     }
     return _itemListAPICmd;

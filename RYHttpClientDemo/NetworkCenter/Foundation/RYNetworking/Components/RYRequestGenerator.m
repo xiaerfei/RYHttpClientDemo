@@ -89,7 +89,6 @@
     return headerDic;
 }
 
-
 #pragma mark - getters and setters
 - (AFHTTPRequestSerializer *)httpRequestSerializer
 {

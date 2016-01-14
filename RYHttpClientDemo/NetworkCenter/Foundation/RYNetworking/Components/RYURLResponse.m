@@ -28,13 +28,13 @@
     self = [super init];
     if (self) {
         self.contentString = responseString;
-        self.content = responseData;
-        self.status = status;
-        self.requestId = [requestId integerValue];
-        self.request = request;
-        self.responseData = responseData;
+        self.content       = responseData;
+        self.status        = status;
+        self.requestId     = [requestId integerValue];
+        self.request       = request;
+        self.responseData  = responseData;
         self.requestParams = request.requestParams;
-        self.isCache = NO;
+        self.isCache       = NO;
     }
     return self;
 }
@@ -44,17 +44,17 @@
     self = [super init];
     if (self) {
         self.contentString = responseString;
-        self.status = [self responseStatusWithError:error];
-        self.requestId = [requestId integerValue];
-        self.request = request;
-        self.responseData = responseData;
+        self.status        = [self responseStatusWithError:error];
+        self.requestId     = [requestId integerValue];
+        self.request       = request;
+        self.responseData  = responseData;
         self.requestParams = request.requestParams;
-        self.isCache = NO;
+        self.isCache       = NO;
         
         if (responseData) {
-            self.content = responseData;
+            self.content   = responseData;
         } else {
-            self.content = nil;
+            self.content   = nil;
         }
     }
     return self;
