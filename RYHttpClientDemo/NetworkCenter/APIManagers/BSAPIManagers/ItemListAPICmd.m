@@ -21,5 +21,9 @@
     return @"heweather/weather/free";
 }
 
+- (BOOL)isRequestHook
+{
+    return YES;
+}
 
 @end

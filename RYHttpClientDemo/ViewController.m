@@ -10,7 +10,7 @@
 #import "ItemListAPICmd.h"
 
 
-@interface ViewController ()<APICmdApiCallBackDelegate,APICmdParamSourceDelegate,APICmdParamSourceDelegate>
+@interface ViewController ()<APICmdApiCallBackDelegate,APICmdParamSourceDelegate,APICmdParamSourceDelegate,APICmdAspect>
 
 @property (nonatomic,strong) ItemListAPICmd *itemListAPICmd;
 @property (weak, nonatomic) IBOutlet UITextField *cityPinyin;
@@ -43,13 +43,19 @@
     
 }
 #pragma mark APICmdParamSourceDelegate
-- (NSDictionary *)paramsForApi:(RYBaseAPICmd *)manager
+- (NSDictionary *)paramsForApi:(RYBaseAPICmd *)apiCmd
 {
-    if (self.itemListAPICmd == manager) {
+    if (self.itemListAPICmd == apiCmd) {
         return @{@"city":self.cityPinyin.text};
     }
     return nil;
 }
+#pragma mark APICmdAspect
+- (void)apiCmd:(RYBaseAPICmd *)apiCmd request:(NSMutableURLRequest *)request
+{
+    
+}
+
 #pragma mark - event responses
 - (IBAction)beginRequestAction:(id)sender {
     if (self.cityPinyin.text.length != 0) {
@@ -66,6 +72,7 @@
         _itemListAPICmd = [[ItemListAPICmd alloc] init];
         _itemListAPICmd.delegate    = self;
         _itemListAPICmd.paramSource = self;
+        _itemListAPICmd.aspect      = self;
     }
     return _itemListAPICmd;
 }

@@ -10,6 +10,8 @@
 #import "RYAPIManager.h"
 #import "NSDictionary+RYNetworkingMethods.h"
 #import "RYServiceKeys.h"
+#import "RYApiProxy.h"
+#import "Aspects.h"
 
 @interface RYBaseAPICmd ()
 @property (nonatomic, copy,   readwrite) NSString     *absouteUrlString;
@@ -27,6 +29,13 @@
     if (self) {
         if ([self conformsToProtocol:@protocol(RYBaseAPICmdDelegate)]) {
             self.child = (id<RYBaseAPICmdDelegate>) self;
+            if ([self.child respondsToSelector:@selector(isRequestHook)]) {
+                if ([self.child isRequestHook]) {
+                    [RYApiProxy aspect_hookSelector:NSSelectorFromString(@"callApiWithRequest:success:fail:") withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo> aspectInfo, NSMutableURLRequest *request,id success,id fail) {
+                        [self hookCallWithRequest:request];
+                    } error:NULL];
+                }
+            }
         } else {
 #ifdef DEBUGLOGGER
             NSAssert(0, @"子类必须要实现APIManager这个protocol。");
@@ -34,6 +43,14 @@
         }
     }
     return self;
+}
+
+#pragma mark - hook methods
+- (void)hookCallWithRequest:(NSMutableURLRequest *)request
+{
+    if ([self.aspect respondsToSelector:@selector(apiCmd:request:)]) {
+        [self.aspect apiCmd:self request:request];
+    }
 }
 
 - (NSString *)absouteUrlString

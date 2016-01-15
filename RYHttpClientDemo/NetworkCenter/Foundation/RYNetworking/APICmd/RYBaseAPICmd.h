@@ -137,6 +137,7 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 - (NSString *)methodName;
 - (NSString *)serviceType;
 - (BOOL)isCacelRequest;
+- (BOOL)isRequestHook;
 
 @end
 
@@ -170,7 +171,7 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
  */
 @protocol APICmdParamSourceDelegate <NSObject>
 @required
-- (NSDictionary *)paramsForApi:(RYBaseAPICmd *)manager;
+- (NSDictionary *)paramsForApi:(RYBaseAPICmd *)apiCmd;
 @end
 
 /*************************************************************************************************/
@@ -197,15 +198,24 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 - (void)apiCmd:(RYBaseAPICmd *)apiCmd afterCallingAPIWithParams:(NSDictionary *)params;
 
 @end
-
+/*************************************************************************************************/
+/*                               FYAPIManagerCallbackDataReformer                                */
+/*************************************************************************************************/
+// 拦截器
+@protocol APICmdAspect <NSObject>
+@optional
+- (void)apiCmd:(RYBaseAPICmd *)apiCmd request:(NSMutableURLRequest *)request;
+@end
 
 
 @interface RYBaseAPICmd : NSObject
 
-@property (nonatomic, weak) NSObject<RYBaseAPICmdDelegate> *child;
-@property (nonatomic, weak) id<APICmdApiCallBackDelegate> delegate;
-@property (nonatomic, weak) id<APICmdInterceptor> interceptor;
-@property (nonatomic, weak) id<APICmdParamSourceDelegate> paramSource;
+@property (nonatomic, weak) NSObject<RYBaseAPICmdDelegate>  *child;
+@property (nonatomic, weak) id<APICmdApiCallBackDelegate>   delegate;
+@property (nonatomic, weak) id<APICmdInterceptor>           interceptor;
+@property (nonatomic, weak) id<APICmdParamSourceDelegate>   paramSource;
+@property (nonatomic, weak) id<APICmdAspect>                aspect;
+
 
 @property (nonatomic, copy) id reformParams;
 @property (nonatomic, copy) NSString *path;
