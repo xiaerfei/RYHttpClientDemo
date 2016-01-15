@@ -8,4 +8,4 @@
 3. 参数回调更改（兼容之前的回调方法） 实现协议“- (NSDictionary *)paramsForApi:(RYBaseAPICmd *)manager ” 可以统一回调参数，具体使用方法在RYBaseAPICmd中的APICmdParamSourceDelegate查看;
 
 ###Version 2.0.1
-1. 添加AOP，主要拦截发起请求的 <font color=red size=5>NSMutableURLRequest</font> 以便能够对待特殊的请求，比如header加入key；
+1. 添加[AOP](https://github.com/steipete/Aspects.git)，主要拦截发起请求的 <font color=red size=5>NSMutableURLRequest</font> 以便能够对待特殊的请求，比如header加入key；
