@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "ItemListAPICmd.h"
+#import "SimplePingHelper.h"
 
 
 @interface ViewController ()<APICmdApiCallBackDelegate,APICmdParamSourceDelegate,APICmdParamSourceDelegate,APICmdAspect>
@@ -26,7 +27,9 @@
 #pragma mark - Lift Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [SimplePingHelper simpleHostpings:@[@"www.baidu.com",@"www.sina.com",@"www.hao123.com",@"www.taobao.com",@"www.rongyu100.com",@"www.qq.com"] completeBlock:^(NSArray *hostPingTimeArray) {
+        NSLog(@"%@",hostPingTimeArray);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -25,6 +25,10 @@
 		4E6259571C48D79A0073AFE8 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E62594A1C48D79A0073AFE8 /* AFURLResponseSerialization.m */; };
 		4E6259581C48D79A0073AFE8 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E62594C1C48D79A0073AFE8 /* AFURLSessionManager.m */; };
 		4E6259591C48D79A0073AFE8 /* Aspects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E62594F1C48D79A0073AFE8 /* Aspects.m */; };
+		4E89CA761C4F64E10047938B /* EtcHostsURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E89CA741C4F64E10047938B /* EtcHostsURLProtocol.m */; };
+		4E89CA7B1C4F71C80047938B /* HostsReplaceURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E89CA7A1C4F71C80047938B /* HostsReplaceURLProtocol.m */; };
+		4E89CA821C4F78090047938B /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E89CA7F1C4F78090047938B /* SimplePing.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4E89CA831C4F78090047938B /* SimplePingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E89CA811C4F78090047938B /* SimplePingHelper.m */; };
 		4EA273B51BBBB85300AD199D /* RYBaseAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273AE1BBBB85300AD199D /* RYBaseAPICmd.m */; };
 		4EA273B61BBBB85300AD199D /* RYAPILogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273B11BBBB85300AD199D /* RYAPILogger.m */; };
 		4EA273B71BBBB85300AD199D /* RYAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA273B41BBBB85300AD199D /* RYAPIManager.m */; };
@@ -90,6 +94,15 @@
 		4E62594C1C48D79A0073AFE8 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		4E62594E1C48D79A0073AFE8 /* Aspects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Aspects.h; sourceTree = "<group>"; };
 		4E62594F1C48D79A0073AFE8 /* Aspects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Aspects.m; sourceTree = "<group>"; };
+		4E89CA731C4F64E10047938B /* EtcHostsURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EtcHostsURLProtocol.h; sourceTree = "<group>"; };
+		4E89CA741C4F64E10047938B /* EtcHostsURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EtcHostsURLProtocol.m; sourceTree = "<group>"; };
+		4E89CA751C4F64E10047938B /* NSEtcHosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEtcHosts.h; sourceTree = "<group>"; };
+		4E89CA791C4F71C80047938B /* HostsReplaceURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostsReplaceURLProtocol.h; sourceTree = "<group>"; };
+		4E89CA7A1C4F71C80047938B /* HostsReplaceURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostsReplaceURLProtocol.m; sourceTree = "<group>"; };
+		4E89CA7E1C4F78090047938B /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
+		4E89CA7F1C4F78090047938B /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
+		4E89CA801C4F78090047938B /* SimplePingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePingHelper.h; sourceTree = "<group>"; };
+		4E89CA811C4F78090047938B /* SimplePingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePingHelper.m; sourceTree = "<group>"; };
 		4EA273AD1BBBB85300AD199D /* RYBaseAPICmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYBaseAPICmd.h; sourceTree = "<group>"; };
 		4EA273AE1BBBB85300AD199D /* RYBaseAPICmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYBaseAPICmd.m; sourceTree = "<group>"; };
 		4EA273B01BBBB85300AD199D /* RYAPILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYAPILogger.h; sourceTree = "<group>"; };
@@ -248,6 +261,54 @@
 			path = Aspects;
 			sourceTree = "<group>";
 		};
+		4E89CA721C4F64E10047938B /* NSEtcHosts */ = {
+			isa = PBXGroup;
+			children = (
+				4E89CA731C4F64E10047938B /* EtcHostsURLProtocol.h */,
+				4E89CA741C4F64E10047938B /* EtcHostsURLProtocol.m */,
+				4E89CA751C4F64E10047938B /* NSEtcHosts.h */,
+			);
+			name = NSEtcHosts;
+			path = Vendors/NSEtcHosts;
+			sourceTree = "<group>";
+		};
+		4E89CA771C4F71880047938B /* Assist */ = {
+			isa = PBXGroup;
+			children = (
+				4E89CA7C1C4F78090047938B /* SimpleHostPing */,
+				4E89CA781C4F71880047938B /* HostsReplace */,
+			);
+			path = Assist;
+			sourceTree = "<group>";
+		};
+		4E89CA781C4F71880047938B /* HostsReplace */ = {
+			isa = PBXGroup;
+			children = (
+				4E89CA791C4F71C80047938B /* HostsReplaceURLProtocol.h */,
+				4E89CA7A1C4F71C80047938B /* HostsReplaceURLProtocol.m */,
+			);
+			path = HostsReplace;
+			sourceTree = "<group>";
+		};
+		4E89CA7C1C4F78090047938B /* SimpleHostPing */ = {
+			isa = PBXGroup;
+			children = (
+				4E89CA7D1C4F78090047938B /* SimplePing */,
+			);
+			path = SimpleHostPing;
+			sourceTree = "<group>";
+		};
+		4E89CA7D1C4F78090047938B /* SimplePing */ = {
+			isa = PBXGroup;
+			children = (
+				4E89CA7E1C4F78090047938B /* SimplePing.h */,
+				4E89CA7F1C4F78090047938B /* SimplePing.m */,
+				4E89CA801C4F78090047938B /* SimplePingHelper.h */,
+				4E89CA811C4F78090047938B /* SimplePingHelper.m */,
+			);
+			path = SimplePing;
+			sourceTree = "<group>";
+		};
 		4EA273A71BBBB85300AD199D /* NetworkCenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +346,8 @@
 		4EA273AB1BBBB85300AD199D /* RYNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				4E89CA771C4F71880047938B /* Assist */,
+				4E89CA721C4F64E10047938B /* NSEtcHosts */,
 				4EA93D1F1C2804D5003EC468 /* Services */,
 				4EA93D121C27F695003EC468 /* Components */,
 				4EA93D0B1C27EC7A003EC468 /* Categories */,
@@ -488,6 +551,7 @@
 				4EA93D101C27EC7A003EC468 /* NSArray+RYNetworkingMethods.m in Sources */,
 				4EA93D221C280506003EC468 /* RYService.m in Sources */,
 				4EA93D181C27F6EB003EC468 /* RYURLResponse.m in Sources */,
+				4E89CA7B1C4F71C80047938B /* HostsReplaceURLProtocol.m in Sources */,
 				4EA93D2F1C2808FB003EC468 /* GenerateRequestService.m in Sources */,
 				4E6259551C48D79A0073AFE8 /* AFURLConnectionOperation.m in Sources */,
 				4E6259541C48D79A0073AFE8 /* AFSecurityPolicy.m in Sources */,
@@ -509,11 +573,14 @@
 				4E6259561C48D79A0073AFE8 /* AFURLRequestSerialization.m in Sources */,
 				4E6259591C48D79A0073AFE8 /* Aspects.m in Sources */,
 				4EA273B51BBBB85300AD199D /* RYBaseAPICmd.m in Sources */,
+				4E89CA761C4F64E10047938B /* EtcHostsURLProtocol.m in Sources */,
+				4E89CA831C4F78090047938B /* SimplePingHelper.m in Sources */,
 				4E2CACE11B5F731B00AC0E94 /* AppDelegate.m in Sources */,
 				4E2CACDE1B5F731B00AC0E94 /* main.m in Sources */,
 				4EA273B61BBBB85300AD199D /* RYAPILogger.m in Sources */,
 				4EA93D1E1C27FDE3003EC468 /* NSURLRequest+RYNetworkingMethods.m in Sources */,
 				4EBCCA3D1C29529E00C36544 /* NSObject+RYNetworkingMethods.m in Sources */,
+				4E89CA821C4F78090047938B /* SimplePing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
