@@ -7,6 +7,10 @@
 //
 
 #import "SimplePingHelper.h"
+#import "RYNetworkingConfiguration.h"
+
+#define kHourSecond 86400
+
 
 typedef void(^SimpleCompleteBlock)(NSString *host,NSTimeInterval pingTime);
 
@@ -30,6 +34,23 @@ typedef void(^SimpleCompleteBlock)(NSString *host,NSTimeInterval pingTime);
 
 // Pings the address, and calls the selector when done. Selector must take a NSnumber which is a bool for success
 + (void)simpleHostpings:(NSArray *)hostPings completeBlock:(void (^)(NSArray *hostPingTimeArray))completeBlock {
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+#ifdef DEBUGLOG
+    [userDefaults removeObjectForKey:kConnectionIPAddressKey];
+#endif
+    
+    NSDictionary *hostHistory = [userDefaults objectForKey:kConnectionIPAddressKey];
+    NSTimeInterval time = [hostHistory[@"time"] doubleValue];
+    if (time != 0) {
+        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+        NSTimeInterval value = now - time;
+        if (value < kHourSecond) {
+            return;
+        }
+    }
+    
     NSMutableArray *simpleArray   = [[NSMutableArray alloc] init];
     __block NSMutableArray *pingTimeArray = [[NSMutableArray alloc] init];
     __block NSInteger hostCount = hostPings.count;
@@ -90,7 +111,7 @@ typedef void(^SimpleCompleteBlock)(NSString *host,NSTimeInterval pingTime);
 }
 
 - (void)failPing:(NSString*)reason {
-    self.pingTime = 1;
+    self.pingTime = 5;
     self.simpleCompleteBlock(self.simplePing.hostName,self.pingTime);
 	[self killPing];
 }
@@ -110,13 +131,13 @@ typedef void(^SimpleCompleteBlock)(NSString *host,NSTimeInterval pingTime);
 }
 
 - (void)simplePing:(SimplePing *)pinger didFailWithError:(NSError *)error {
-    self.pingTime = 1;
+    self.pingTime = 5;
     self.simpleCompleteBlock(self.simplePing.hostName,self.pingTime);
     [self killPing];
 }
 
 - (void)simplePing:(SimplePing *)pinger didFailToSendPacket:(NSData *)packet error:(NSError *)error {
-    self.pingTime = 1;
+    self.pingTime = 5;
     self.simpleCompleteBlock(self.simplePing.hostName,self.pingTime);
     [self killPing];
 }

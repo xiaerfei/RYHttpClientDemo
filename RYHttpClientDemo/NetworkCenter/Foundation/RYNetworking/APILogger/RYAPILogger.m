@@ -11,7 +11,7 @@
 #import "NSDictionary+RYNetworkingMethods.h"
 #import "NSObject+RYNetworkingMethods.h"
 #import "NSMutableString+RYNetworkingMethods.h"
-#define DEBUGLOG
+#import "RYNetworkingConfiguration.h"
 
 @implementation RYAPILogger
 

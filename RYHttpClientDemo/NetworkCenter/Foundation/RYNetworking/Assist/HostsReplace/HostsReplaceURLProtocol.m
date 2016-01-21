@@ -7,8 +7,7 @@
 //
 
 #import "HostsReplaceURLProtocol.h"
-#define kConnectionProtocolKey @"ConnectionProtocolKey"
-
+#import "RYNetworkingConfiguration.h"
 
 
 @interface HostsReplaceConfiguration : NSObject <HostsReplaceConfigurationDelegate>
@@ -17,6 +16,20 @@
 @end
 
 @implementation HostsReplaceConfiguration
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *hostHistory = [userDefaults objectForKey:kConnectionIPAddressKey];
+        if (hostHistory.count != 0) {
+            self.iPAddressesHostName[hostHistory[@"shost"]] = hostHistory[@"dhost"];
+        }
+    }
+    return self;
+}
+
 
 - (NSString *)IPAddressForHostName:(NSString *)hostName
 {
@@ -28,6 +41,12 @@
 {
     if (hostName != nil && IPAddress != nil) {
         self.iPAddressesHostName[[hostName lowercaseString]] = IPAddress;
+        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setValue:@{@"shost":hostName.lowercaseString,
+                                 @"dhost":IPAddress,
+                                 @"time":@(time)} forKey:kConnectionIPAddressKey];
+        [userDefaults synchronize];
     }
 }
 
@@ -41,8 +60,6 @@
 }
 
 @end
-
-
 
 @interface HostsReplaceURLProtocol ()<NSURLConnectionDataDelegate>
 

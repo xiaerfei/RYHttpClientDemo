@@ -20,4 +20,10 @@ static NSTimeInterval kNetworkingTimeoutSeconds = 15.0f;
 
 static NSString *const kReformParamArray        = @"ReformParamArray";
 
+#define DEBUGLOG
+
+#define kConnectionProtocolKey  @"ConnectionProtocolKey"
+#define kConnectionIPAddressKey @"ConnectionIPAddressKey"
+
+
 #endif
