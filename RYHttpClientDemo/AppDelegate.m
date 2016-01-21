@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "SimplePingHelper.h"
+#import "HostsReplaceURLProtocol.h"
+
 
 @interface AppDelegate ()
 
@@ -17,6 +20,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [NSURLProtocol registerClass:[HostsReplaceURLProtocol class]];
+    [SimplePingHelper simpleHostpings:@[@"www.baidu.com",@"www.sina.com",@"www.hao123.com",@"www.taobao.com",@"www.rongyu100.com",@"www.qq.com"] completeBlock:^(NSArray *hostPingTimeArray) {
+        [HostsReplaceURLProtocol configureHostsWithBlock:^(id<HostsReplaceConfigurationDelegate> configuration) {
+            NSDictionary *hostDict = hostPingTimeArray.firstObject;
+            [configuration replaceHostName:@"apis.baidu.com" toIPAddress:hostDict.allKeys.firstObject];
+        }];
+        NSLog(@"%@",hostPingTimeArray);
+    }];
+    
     return YES;
 }
 

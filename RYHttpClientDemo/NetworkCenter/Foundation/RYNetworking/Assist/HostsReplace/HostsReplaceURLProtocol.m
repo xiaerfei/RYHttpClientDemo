@@ -10,6 +10,40 @@
 #define kConnectionProtocolKey @"ConnectionProtocolKey"
 
 
+
+@interface HostsReplaceConfiguration : NSObject <HostsReplaceConfigurationDelegate>
+@property (nonatomic, copy) NSMutableDictionary *iPAddressesHostName;
+- (NSString *)IPAddressForHostName:(NSString *)hostName;
+@end
+
+@implementation HostsReplaceConfiguration
+
+- (NSString *)IPAddressForHostName:(NSString *)hostName
+{
+    return self.iPAddressesHostName[hostName];
+}
+
+#pragma mark - HostsReplaceConfigurationDelegate
+- (void)replaceHostName:(NSString *)hostName toIPAddress:(NSString *)IPAddress
+{
+    if (hostName != nil && IPAddress != nil) {
+        self.iPAddressesHostName[[hostName lowercaseString]] = IPAddress;
+    }
+}
+
+#pragma mark - getter
+- (NSMutableDictionary *)iPAddressesHostName
+{
+    if (_iPAddressesHostName == nil) {
+        _iPAddressesHostName = [[NSMutableDictionary alloc] init];
+    }
+    return _iPAddressesHostName;
+}
+
+@end
+
+
+
 @interface HostsReplaceURLProtocol ()<NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection * connection;
@@ -19,6 +53,22 @@
 
 @implementation HostsReplaceURLProtocol
 
++ (HostsReplaceConfiguration *)sharedConfiguration {
+    static HostsReplaceConfiguration * _sharedConfiguration = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedConfiguration = [[HostsReplaceConfiguration alloc] init];
+    });
+    
+    return _sharedConfiguration;
+}
+
++ (void)configureHostsWithBlock:(void (^)(id <HostsReplaceConfigurationDelegate> configuration))block {
+    if (block) {
+        block([self sharedConfiguration]);
+    }
+}
+
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
     
     /*
@@ -26,6 +76,8 @@
      */
     if ([NSURLProtocol propertyForKey:kConnectionProtocolKey inRequest:request]) {
         return NO;
+    } else {
+        return YES;
     }
 
     return NO;
@@ -35,8 +87,10 @@
     
     // 修改了请求的头部信息
     NSMutableURLRequest * mutableReq = [request mutableCopy];
-
-    
+    NSURLComponents *URLComponents = [NSURLComponents componentsWithString:[[mutableReq URL] absoluteString]];
+    URLComponents.scheme = @"http";
+    URLComponents.host = [[[self class] sharedConfiguration] IPAddressForHostName:URLComponents.host];
+    mutableReq.URL = [URLComponents URL];
     return [mutableReq copy];
 }
 

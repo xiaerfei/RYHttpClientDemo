@@ -8,6 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+
+@protocol HostsReplaceConfigurationDelegate <NSObject>
+
+- (void)replaceHostName:(NSString *)hostName toIPAddress:(NSString *)IPAddress;
+
+@end
+
+
+
 @interface HostsReplaceURLProtocol : NSURLProtocol
+
++ (void)configureHostsWithBlock:(void (^)(id <HostsReplaceConfigurationDelegate> configuration))block;
+
 
 @end
