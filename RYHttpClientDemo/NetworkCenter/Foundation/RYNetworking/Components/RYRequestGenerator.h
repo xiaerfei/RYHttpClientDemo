@@ -12,10 +12,10 @@
 
 + (instancetype)sharedInstance;
 
-- (NSMutableURLRequest *)generateGETRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
-- (NSMutableURLRequest *)generatePOSTRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
+- (NSMutableURLRequest *)generateGETRequestWithRequestParams:(id)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
+- (NSMutableURLRequest *)generatePOSTRequestWithRequestParams:(id)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
 
-- (NSMutableURLRequest *)generateNormalGETRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
-- (NSMutableURLRequest *)generateNormalPOSTRequestWithRequestParams:(NSDictionary *)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
+- (NSMutableURLRequest *)generateNormalGETRequestWithRequestParams:(id)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
+- (NSMutableURLRequest *)generateNormalPOSTRequestWithRequestParams:(id)requestParams url:(NSString *)url serviceIdentifier:(NSString *)serviceIdentifier;
 
 @end

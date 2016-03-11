@@ -29,3 +29,128 @@ version 2.0
 3.参数回调更改（兼容之前的回调方法） 实现协议“- (NSDictionary *)paramsForApi:(RYBaseAPICmd *)manager ” 可以统一回调参数，具体使用方法在RYBaseAPICmd中的APICmdParamSourceDelegate查看;
 ===============================================================================================================
 ===============================================================================================================
+
+.
+├── README.md
+├── RYHttpClientDemo
+│   ├── AppDelegate.h
+│   ├── AppDelegate.m
+│   ├── Base.lproj
+│   │   ├── LaunchScreen.xib
+│   │   └── Main.storyboard
+│   ├── Images.xcassets
+│   │   └── AppIcon.appiconset
+│   │       └── Contents.json
+│   ├── Info.plist
+│   ├── ItemListAPICmd.h
+│   ├── ItemListAPICmd.m
+│   ├── NetworkCenter
+│   │   ├── APIManagers
+│   │   │   └── BSAPIManagers
+│   │   │       ├── ItemListAPICmd.h
+│   │   │       └── ItemListAPICmd.m
+│   │   └── Foundation
+│   │       └── RYNetworking
+│   │           ├── APICmd
+│   │           │   ├── RYBaseAPICmd.h
+│   │           │   └── RYBaseAPICmd.m
+│   │           ├── APILogger
+│   │           │   ├── RYAPILogger.h
+│   │           │   └── RYAPILogger.m
+│   │           ├── APIManager
+│   │           │   ├── RYAPIManager.h
+│   │           │   └── RYAPIManager.m
+│   │           ├── Assist
+│   │           │   ├── HostsReplace
+│   │           │   │   ├── HostsReplaceURLProtocol.h
+│   │           │   │   └── HostsReplaceURLProtocol.m
+│   │           │   └── SimpleHostPing
+│   │           │       └── SimplePing
+│   │           │           ├── SimplePing.h
+│   │           │           ├── SimplePing.m
+│   │           │           ├── SimplePingHelper.h
+│   │           │           └── SimplePingHelper.m
+│   │           ├── Categories
+│   │           │   ├── NSArray+RYNetworkingMethods.h
+│   │           │   ├── NSArray+RYNetworkingMethods.m
+│   │           │   ├── NSDictionary+RYNetworkingMethods.h
+│   │           │   ├── NSDictionary+RYNetworkingMethods.m
+│   │           │   ├── NSMutableString+RYNetworkingMethods.h
+│   │           │   ├── NSMutableString+RYNetworkingMethods.m
+│   │           │   ├── NSObject+RYNetworkingMethods.h
+│   │           │   ├── NSObject+RYNetworkingMethods.m
+│   │           │   ├── NSURLRequest+RYNetworkingMethods.h
+│   │           │   └── NSURLRequest+RYNetworkingMethods.m
+│   │           ├── Components
+│   │           │   ├── RYApiProxy.h
+│   │           │   ├── RYApiProxy.m
+│   │           │   ├── RYRequestGenerator.h
+│   │           │   ├── RYRequestGenerator.m
+│   │           │   ├── RYURLResponse.h
+│   │           │   └── RYURLResponse.m
+│   │           ├── RYNetworkingConfiguration.h
+│   │           ├── Services
+│   │           │   ├── GenerateRequestService
+│   │           │   │   ├── GenerateRequestService.h
+│   │           │   │   └── GenerateRequestService.m
+│   │           │   ├── RYService.h
+│   │           │   ├── RYService.m
+│   │           │   ├── RYServiceFactory.h
+│   │           │   ├── RYServiceFactory.m
+│   │           │   ├── RYServiceKeys.h
+│   │           │   └── RYServiceKeys.m
+│   │           └── Vendors
+│   │               └── NSEtcHosts
+│   │                   ├── EtcHostsURLProtocol.h
+│   │                   ├── EtcHostsURLProtocol.m
+│   │                   └── NSEtcHosts.h
+│   ├── Venders
+│   │   ├── AFNetworking
+│   │   │   ├── AFHTTPRequestOperation.h
+│   │   │   ├── AFHTTPRequestOperation.m
+│   │   │   ├── AFHTTPRequestOperationManager.h
+│   │   │   ├── AFHTTPRequestOperationManager.m
+│   │   │   ├── AFHTTPSessionManager.h
+│   │   │   ├── AFHTTPSessionManager.m
+│   │   │   ├── AFNetworkReachabilityManager.h
+│   │   │   ├── AFNetworkReachabilityManager.m
+│   │   │   ├── AFNetworking.h
+│   │   │   ├── AFSecurityPolicy.h
+│   │   │   ├── AFSecurityPolicy.m
+│   │   │   ├── AFURLConnectionOperation.h
+│   │   │   ├── AFURLConnectionOperation.m
+│   │   │   ├── AFURLRequestSerialization.h
+│   │   │   ├── AFURLRequestSerialization.m
+│   │   │   ├── AFURLResponseSerialization.h
+│   │   │   ├── AFURLResponseSerialization.m
+│   │   │   ├── AFURLSessionManager.h
+│   │   │   └── AFURLSessionManager.m
+│   │   └── Aspects
+│   │       ├── Aspects.h
+│   │       └── Aspects.m
+│   ├── ViewController.h
+│   ├── ViewController.m
+│   ├── main.m
+│   └── 说?\230\216
+├── RYHttpClientDemo.xcodeproj
+│   ├── project.pbxproj
+│   ├── project.xcworkspace
+│   │   ├── contents.xcworkspacedata
+│   │   ├── xcshareddata
+│   │   │   └── RYHttpClientDemo.xccheckout
+│   │   └── xcuserdata
+│   │       └── xiaerfei.xcuserdatad
+│   │           └── UserInterfaceState.xcuserstate
+│   └── xcuserdata
+│       └── xiaerfei.xcuserdatad
+│           ├── xcdebugger
+│           │   └── Breakpoints_v2.xcbkptlist
+│           └── xcschemes
+│               ├── RYHttpClientDemo.xcscheme
+│               └── xcschememanagement.plist
+└── RYHttpClientDemoTests
+├── Info.plist
+└── RYHttpClientDemoTests.m
+
+35 directories, 85 files
+

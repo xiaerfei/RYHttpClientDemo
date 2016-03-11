@@ -156,7 +156,7 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 /*  获取 请求的参数写法  路径参数 ||
  *  路径参数 " ||xxx " ：
  *  如 api_v2/FundProduct/{fundProductId}/ExtAttribute
- *  在XXXAPICmd 中 "- (NSString *)methodName" 的返回值 为：api_v2/FundProduct/ ||fundProductId /ExtAttribute
+ *  在XXXAPICmd 中 "- (NSString *)methodName" 的返回值 为：api_v2/FundProduct/||fundProductId/ExtAttribute
  *  请求格式 @{@"||fundProductId":@"ueoieu642837425234"}
  *
  *  如果请求为POST API 和 上传中都有参数， API中的参数：路径参数同上   body参数前加":"，如：
