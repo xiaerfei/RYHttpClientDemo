@@ -147,6 +147,10 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 //api回调 返回数据，由controller或者持有者实现
 @protocol APICmdApiCallBackDelegate <NSObject>
 @required
+
+- (void)apiCmdDidSuccess:(RYBaseAPICmd *)baseAPICmd responseData:(id)responseData;
+- (void)apiCmdDidFailed:(RYBaseAPICmd *)baseAPICmd error:(NSError *)error;
+@optional
 - (void)apiCmdDidSuccess:(RYBaseAPICmd *)baseAPICmd response:(RYURLResponse *)response;
 - (void)apiCmdDidFailed:(RYBaseAPICmd *)baseAPICmd errorType:(RYBaseAPICmdErrorType)errorType;
 @end

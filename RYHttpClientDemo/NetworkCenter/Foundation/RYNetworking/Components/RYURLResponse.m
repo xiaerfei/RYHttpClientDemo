@@ -32,7 +32,7 @@
         self.status        = status;
         self.requestId     = [requestId integerValue];
         self.request       = request;
-        self.responseData  = responseData;
+//        self.responseData  = responseData;
         self.requestParams = request.requestParams;
         self.isCache       = NO;
     }
@@ -47,7 +47,7 @@
         self.status        = [self responseStatusWithError:error];
         self.requestId     = [requestId integerValue];
         self.request       = request;
-        self.responseData  = responseData;
+//        self.responseData  = responseData;
         self.requestParams = request.requestParams;
         self.isCache       = NO;
         
@@ -68,7 +68,7 @@
         
         // 除了超时以外，所有错误都当成是无网络
         if (error.code == NSURLErrorTimedOut) {
-            result = RYURLResponseStatusErrorNoNetwork;
+            result = RYURLResponseStatusErrorTimeout;
         }
         return result;
     } else {

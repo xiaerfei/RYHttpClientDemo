@@ -17,7 +17,7 @@
 @property (nonatomic, assign, readonly) NSInteger requestId;
 @property (nonatomic, copy,   readonly) NSURLRequest *request;
 @property (nonatomic, copy,   readonly) NSData *responseData;
-@property (nonatomic, copy)             NSDictionary *requestParams;
+@property (nonatomic, copy)             id requestParams;
 @property (nonatomic, assign, readonly) BOOL isCache;
 
 
