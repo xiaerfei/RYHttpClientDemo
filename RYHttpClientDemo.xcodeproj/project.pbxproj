@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E0C0CF91CA8D17400399599 /* RYServicePrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0C0CF81CA8D17400399599 /* RYServicePrivate.m */; };
 		4E1F91911C2A769A0065BC53 /* ItemListAPICmd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1F91901C2A769A0065BC53 /* ItemListAPICmd.m */; };
 		4E2CACDE1B5F731B00AC0E94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CACDD1B5F731B00AC0E94 /* main.m */; };
 		4E2CACE11B5F731B00AC0E94 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CACE01B5F731B00AC0E94 /* AppDelegate.m */; };
@@ -58,6 +59,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E0C0CF71CA8D17400399599 /* RYServicePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYServicePrivate.h; sourceTree = "<group>"; };
+		4E0C0CF81CA8D17400399599 /* RYServicePrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYServicePrivate.m; sourceTree = "<group>"; };
 		4E1F918F1C2A769A0065BC53 /* ItemListAPICmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemListAPICmd.h; sourceTree = "<group>"; };
 		4E1F91901C2A769A0065BC53 /* ItemListAPICmd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemListAPICmd.m; sourceTree = "<group>"; };
 		4E2CACD81B5F731B00AC0E94 /* RYHttpClientDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RYHttpClientDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -434,6 +437,8 @@
 				4EA93D241C2805B6003EC468 /* RYServiceFactory.m */,
 				4EA93D291C28083D003EC468 /* RYServiceKeys.h */,
 				4EA93D2A1C28083D003EC468 /* RYServiceKeys.m */,
+				4E0C0CF71CA8D17400399599 /* RYServicePrivate.h */,
+				4E0C0CF81CA8D17400399599 /* RYServicePrivate.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -578,6 +583,7 @@
 				4E2CACE11B5F731B00AC0E94 /* AppDelegate.m in Sources */,
 				4E2CACDE1B5F731B00AC0E94 /* main.m in Sources */,
 				4EA273B61BBBB85300AD199D /* RYAPILogger.m in Sources */,
+				4E0C0CF91CA8D17400399599 /* RYServicePrivate.m in Sources */,
 				4EA93D1E1C27FDE3003EC468 /* NSURLRequest+RYNetworkingMethods.m in Sources */,
 				4EBCCA3D1C29529E00C36544 /* NSObject+RYNetworkingMethods.m in Sources */,
 				4E89CA821C4F78090047938B /* SimplePing.m in Sources */,

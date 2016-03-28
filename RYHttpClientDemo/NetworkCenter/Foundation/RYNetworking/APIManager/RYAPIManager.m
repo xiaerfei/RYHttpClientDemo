@@ -12,6 +12,7 @@
 #import "RYAPILogger.h"
 #import "RYApiProxy.h"
 #import "RYURLResponse.h"
+#import "RYServicePrivate.h"
 
 #define RYCallAPI(REQUEST_METHOD, REQUEST_ID)                                                       \
 {                                                                                       \
@@ -112,6 +113,14 @@ __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
 - (void)successedOnCallingAPI:(RYURLResponse *)response baseAPICmd:(RYBaseAPICmd *)baseAPICmd
 {
     [self removeRequestIdWithRequestID:response.requestId];
+    if ([baseAPICmd.child respondsToSelector:@selector(jsonValidator)]) {
+        id json = [baseAPICmd.child jsonValidator];
+        if ([RYServicePrivate checkJson:response.content withValidator:json] == NO) {
+            [self failedOnCallingAPI:response withErrorType:RYAPIManagerErrorTypeNoContent baseAPICmd:baseAPICmd];
+            return;
+        }
+    }
+    
     if (response.content) {
         if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformSuccessWithResponse:)]) {
             [baseAPICmd.interceptor apiCmd:baseAPICmd beforePerformSuccessWithResponse:response];

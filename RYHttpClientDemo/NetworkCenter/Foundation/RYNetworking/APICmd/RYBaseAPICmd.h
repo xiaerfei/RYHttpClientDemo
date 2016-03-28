@@ -138,7 +138,8 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 - (NSString *)serviceType;
 - (BOOL)isCacelRequest;
 - (BOOL)isRequestHook;
-
+//验证返回的数据格式是否正确
+- (id)jsonValidator;
 @end
 
 /*************************************************************************************************/
