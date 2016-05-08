@@ -17,7 +17,7 @@
 
 - (NSString *)onlineApiBaseUrl
 {
-    return @"http://www.baidu.com/";
+    return @"http://apis.baidu.com/";
 }
 
 - (NSString *)onlineApiVersion
