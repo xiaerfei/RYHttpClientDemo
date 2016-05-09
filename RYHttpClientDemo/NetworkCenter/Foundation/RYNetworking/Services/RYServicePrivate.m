@@ -11,8 +11,7 @@
 @implementation RYServicePrivate
 
 + (BOOL)checkJson:(id)json withValidator:(id)validatorJson {
-    if ([json isKindOfClass:[NSDictionary class]] &&
-        [validatorJson isKindOfClass:[NSDictionary class]]) {
+    if ([json isKindOfClass:[NSDictionary class]] && [validatorJson isKindOfClass:[NSDictionary class]]) {
         NSDictionary * dict = json;
         NSDictionary * validator = validatorJson;
         BOOL result = YES;
@@ -21,23 +20,20 @@
         while ((key = [enumerator nextObject]) != nil) {
             id value = dict[key];
             id format = validator[key];
-            if ([value isKindOfClass:[NSDictionary class]]
-                || [value isKindOfClass:[NSArray class]]) {
+            if ([value isKindOfClass:[NSDictionary class]] || [value isKindOfClass:[NSArray class]]) {
                 result = [self checkJson:value withValidator:format];
                 if (!result) {
                     break;
                 }
             } else {
-                if ([value isKindOfClass:format] == NO &&
-                    [value isKindOfClass:[NSNull class]] == NO) {
+                if ([value isKindOfClass:format] == NO && [value isKindOfClass:[NSNull class]] == NO) {
                     result = NO;
                     break;
                 }
             }
         }
         return result;
-    } else if ([json isKindOfClass:[NSArray class]] &&
-               [validatorJson isKindOfClass:[NSArray class]]) {
+    } else if ([json isKindOfClass:[NSArray class]] && [validatorJson isKindOfClass:[NSArray class]]) {
         NSArray * validatorArray = (NSArray *)validatorJson;
         if (validatorArray.count > 0) {
             NSArray * array = json;

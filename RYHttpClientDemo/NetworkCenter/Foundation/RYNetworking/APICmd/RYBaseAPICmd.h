@@ -180,7 +180,7 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 @end
 
 /*************************************************************************************************/
-/*                                    APIManagerInterceptor                                      */
+/*                                    APICmdInterceptor                                      */
 /*************************************************************************************************/
 /*
  APIBaseManager的派生类必须符合这些protocal
@@ -204,6 +204,16 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 
 @end
 /*************************************************************************************************/
+/*                                    APICmdValidator                                            */
+/*************************************************************************************************/
+@protocol APICmdValidator <NSObject>
+@optional
+- (BOOL)manager:(RYBaseAPICmd *)manager isCorrectWithParamsData:(id)data;
+- (BOOL)manager:(RYBaseAPICmd *)manager isCorrectWithCallBackData:(id)data;
+@end
+
+
+/*************************************************************************************************/
 /*                               FYAPIManagerCallbackDataReformer                                */
 /*************************************************************************************************/
 // 拦截器
@@ -219,6 +229,7 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 @property (nonatomic, weak) id<APICmdApiCallBackDelegate>   delegate;
 @property (nonatomic, weak) id<APICmdInterceptor>           interceptor;
 @property (nonatomic, weak) id<APICmdParamSourceDelegate>   paramSource;
+@property (nonatomic, weak) id<APICmdValidator>             validator;
 @property (nonatomic, weak) id<APICmdAspect>                aspect;
 
 

@@ -7,11 +7,28 @@
 //
 
 #import "RYBaseAPICmd.h"
+#import "AFNetworking.h"
+#import "RYAPILogger.h"
+#import "RYApiProxy.h"
+#import "RYURLResponse.h"
+#import "RYServicePrivate.h"
 #import "RYAPIManager.h"
 #import "NSDictionary+RYNetworkingMethods.h"
 #import "RYServiceKeys.h"
-#import "RYApiProxy.h"
 #import "Aspects.h"
+
+#define RYCallAPI(REQUEST_METHOD, REQUEST_ID)                                                       \
+{                                                                                       \
+__weak __typeof(baseAPICmd) weakBaseAPICmd = baseAPICmd;                                          \
+REQUEST_ID = [[RYApiProxy sharedInstance] call##REQUEST_METHOD##WithParams:baseAPICmd.reformParams serviceIdentifier:baseAPICmd.serviceIdentifier url:urlString success:^(RYURLResponse *response) { \
+__strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
+[self successedOnCallingAPI:response baseAPICmd:strongBaseAPICmd];                                          \
+} fail:^(RYURLResponse *response) {                                                \
+__strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
+[self failedOnCallingAPI:response withErrorType:RYBaseAPICmdErrorTypeDefault baseAPICmd:strongBaseAPICmd];  \
+}];                                                                                 \
+[self.requestIdList addObject:@(REQUEST_ID)];                                          \
+}
 
 @interface RYBaseAPICmd ()
 @property (nonatomic, copy,   readwrite) NSString     *absouteUrlString;
@@ -19,6 +36,8 @@
 @property (nonatomic, copy,   readwrite) NSDictionary *cookie;
 @property (nonatomic, copy,   readwrite) NSString     *serviceIdentifier;
 @property (nonatomic, assign, readwrite) BOOL         isLoading;
+@property (nonatomic, strong) NSMutableArray *requestIdList;
+
 @end
 
 @implementation RYBaseAPICmd
@@ -44,6 +63,56 @@
     }
     return self;
 }
+
+#pragma mark - public methods
+/**
+ *   @author xiaerfei, 15-09-08 11:09:14
+ *
+ *   isLoading
+ *
+ *   @return
+ */
+- (BOOL)isLoading
+{
+    _isLoading = [[RYAPIManager manager] isLoadingWithRequestID:self.requestId];
+    return _isLoading;
+}
+/**
+ *   @author xiaerfei, 15-09-08 11:09:59
+ *
+ *   取消当前的请求
+ */
+- (void)cancelRequest
+{
+    [[RYAPIManager manager] cancelRequestWithRequestID:self.requestId];
+}
+/**
+ *   @author xiaerfei, 15-08-25 14:08:05
+ *
+ *   开始请求数据
+ */
+- (void)loadData
+{
+    self.requestId = [[RYAPIManager manager] performCmd:self];
+}
+
+
+
+
+
+#pragma mark - Calling API
+
+
+
+
+
+
+
+
+
+
+
+
 
 #pragma mark - hook methods
 - (void)hookCallWithRequest:(NSMutableURLRequest *)request
@@ -100,36 +169,6 @@
     }
     return _serviceIdentifier;
 }
-/**
- *   @author xiaerfei, 15-09-08 11:09:14
- *
- *   isLoading
- *
- *   @return
- */
-- (BOOL)isLoading
-{
-    _isLoading = [[RYAPIManager manager] isLoadingWithRequestID:self.requestId];
-    return _isLoading;
-}
-/**
- *   @author xiaerfei, 15-09-08 11:09:59
- *
- *   取消当前的请求
- */
-- (void)cancelRequest
-{
-    [[RYAPIManager manager] cancelRequestWithRequestID:self.requestId];
-}
-/**
- *   @author xiaerfei, 15-08-25 14:08:05
- *
- *   开始请求数据
- */
-- (void)loadData
-{
-    self.requestId = [[RYAPIManager manager] performCmd:self];
-}
 
 - (void)dealloc
 {
@@ -141,4 +180,14 @@
         [self cancelRequest];
     }
 }
+
+#pragma mark - getters
+- (NSMutableArray *)requestIdList
+{
+    if (_requestIdList == nil) {
+        _requestIdList = [[NSMutableArray alloc] init];
+    }
+    return _requestIdList;
+}
+
 @end
