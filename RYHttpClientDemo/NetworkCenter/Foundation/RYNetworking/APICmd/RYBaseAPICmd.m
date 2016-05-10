@@ -12,20 +12,19 @@
 #import "RYApiProxy.h"
 #import "RYURLResponse.h"
 #import "RYServicePrivate.h"
-#import "RYAPIManager.h"
 #import "NSDictionary+RYNetworkingMethods.h"
 #import "RYServiceKeys.h"
 #import "Aspects.h"
 
 #define RYCallAPI(REQUEST_METHOD, REQUEST_ID)                                                       \
 {                                                                                       \
-__weak __typeof(baseAPICmd) weakBaseAPICmd = baseAPICmd;                                          \
-REQUEST_ID = [[RYApiProxy sharedInstance] call##REQUEST_METHOD##WithParams:baseAPICmd.reformParams serviceIdentifier:baseAPICmd.serviceIdentifier url:urlString success:^(RYURLResponse *response) { \
-__strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
-[self successedOnCallingAPI:response baseAPICmd:strongBaseAPICmd];                                          \
+__weak __typeof(self) weakSelf = self;                                          \
+REQUEST_ID = [[RYApiProxy sharedInstance] call##REQUEST_METHOD##WithParams:self.reformParams serviceIdentifier:self.serviceIdentifier url:urlString success:^(RYURLResponse *response) { \
+__strong __typeof(weakSelf) strongSelf = weakSelf;\
+[self successedOnCallingAPI:response baseAPICmd:strongSelf];                                          \
 } fail:^(RYURLResponse *response) {                                                \
-__strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
-[self failedOnCallingAPI:response withErrorType:RYBaseAPICmdErrorTypeDefault baseAPICmd:strongBaseAPICmd];  \
+__strong __typeof(weakSelf) strongSelf = weakSelf;\
+[self failedOnCallingAPI:response withErrorType:RYBaseAPICmdErrorTypeDefault baseAPICmd:strongSelf];  \
 }];                                                                                 \
 [self.requestIdList addObject:@(REQUEST_ID)];                                          \
 }
@@ -74,7 +73,7 @@ __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
  */
 - (BOOL)isLoading
 {
-    _isLoading = [[RYAPIManager manager] isLoadingWithRequestID:self.requestId];
+    _isLoading = [self isLoadingWithRequestID:self.requestId];
     return _isLoading;
 }
 /**
@@ -84,7 +83,7 @@ __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
  */
 - (void)cancelRequest
 {
-    [[RYAPIManager manager] cancelRequestWithRequestID:self.requestId];
+    [self cancelRequestWithRequestID:self.requestId];
 }
 /**
  *   @author xiaerfei, 15-08-25 14:08:05
@@ -93,26 +92,96 @@ __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
  */
 - (void)loadData
 {
-    self.requestId = [[RYAPIManager manager] performCmd:self];
+//    self.requestId = [[RYAPIManager manager] performCmd:self];
+    
+    NSString *urlString = [self absouteUrlString];
+    
+    if ([self.validator respondsToSelector:@selector(apiCmd:isCorrectWithParamsData:)]) {
+        BOOL isValidator = [self.validator apiCmd:self isCorrectWithParamsData:self.reformParams];
+        if (isValidator == NO) {
+            return;
+        }
+    }
+    
+    if ([self.interceptor respondsToSelector:@selector(apiCmdStartLoadData:)]) {
+        [self.interceptor apiCmdStartLoadData:self];
+    }
+    
+    if ([self isReachable]) {
+        switch (self.child.requestType) {
+            case RYBaseAPICmdRequestTypeGet:
+                RYCallAPI(GET, self.requestId);
+                break;
+            case RYBaseAPICmdRequestTypePost:
+                RYCallAPI(POST, self.requestId);
+                break;
+            case RYBaseAPICmdRequestTypeGetNormal:
+                RYCallAPI(GETNormal, self.requestId);
+                break;
+            case RYBaseAPICmdRequestTypePostNormal:
+                RYCallAPI(POSTNormal, self.requestId);
+                break;
+            default:
+                break;
+        }
+    } else {
+        if ([self.interceptor respondsToSelector:@selector(apiCmd:beforePerformFailWithResponse:)]) {
+            [self.interceptor apiCmd:self beforePerformFailWithResponse:nil];
+        }
+        if ([self.delegate respondsToSelector:@selector(apiCmdDidFailed:errorType:)]) {
+            [self.delegate apiCmdDidFailed:self errorType:RYBaseAPICmdErrorTypeNoNetWork];
+        }
+        if ([self.interceptor respondsToSelector:@selector(apiCmd:afterPerformFailWithResponse:)]) {
+            [self.interceptor apiCmd:self afterPerformFailWithResponse:nil];
+        }
+    }
+}
+#pragma mark - APICall
+
+- (void)successedOnCallingAPI:(RYURLResponse *)response baseAPICmd:(RYBaseAPICmd *)baseAPICmd
+{
+    [self removeRequestIdWithRequestID:response.requestId];
+    if ([baseAPICmd.child respondsToSelector:@selector(jsonValidator)]) {
+        id json = [baseAPICmd.child jsonValidator];
+        if ([RYServicePrivate checkJson:response.content withValidator:json] == NO) {
+            [self failedOnCallingAPI:response withErrorType:RYAPIManagerErrorTypeNoContent baseAPICmd:baseAPICmd];
+            return;
+        }
+    }
+    if ([self.validator respondsToSelector:@selector(apiCmd:isCorrectWithCallBackData:)]) {
+        BOOL isValidator = [self.validator apiCmd:self isCorrectWithCallBackData:response.content];
+        if (isValidator == NO) {
+            return;
+        }
+    }
+    if (response.content) {
+        if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformSuccessWithResponse:)]) {
+            [baseAPICmd.interceptor apiCmd:baseAPICmd beforePerformSuccessWithResponse:response];
+        }
+        if ([baseAPICmd.delegate respondsToSelector:@selector(apiCmdDidSuccess:response:)]) {
+            [baseAPICmd.delegate apiCmdDidSuccess:baseAPICmd response:response];
+        }
+        if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformSuccessWithResponse:)]) {
+            [baseAPICmd.interceptor apiCmd:baseAPICmd afterPerformSuccessWithResponse:response];
+        }
+    } else {
+        [self failedOnCallingAPI:response withErrorType:RYAPIManagerErrorTypeNoContent baseAPICmd:baseAPICmd];
+    }
 }
 
-
-
-
-
-#pragma mark - Calling API
-
-
-
-
-
-
-
-
-
-
-
-
+- (void)failedOnCallingAPI:(RYURLResponse *)response withErrorType:(RYBaseAPICmdErrorType)errorType baseAPICmd:(RYBaseAPICmd *)baseAPICmd
+{
+    [self removeRequestIdWithRequestID:response.requestId];
+    if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:beforePerformFailWithResponse:)]) {
+        [baseAPICmd.interceptor apiCmd:baseAPICmd beforePerformFailWithResponse:response];
+    }
+    if ([baseAPICmd.delegate respondsToSelector:@selector(apiCmdDidFailed:errorType:)]) {
+        [baseAPICmd.delegate apiCmdDidFailed:baseAPICmd errorType:errorType];
+    }
+    if ([baseAPICmd.interceptor respondsToSelector:@selector(apiCmd:afterPerformFailWithResponse:)]) {
+        [baseAPICmd.interceptor apiCmd:baseAPICmd afterPerformFailWithResponse:response];
+    }
+}
 
 #pragma mark - hook methods
 - (void)hookCallWithRequest:(NSMutableURLRequest *)request
@@ -178,6 +247,49 @@ __strong __typeof(weakBaseAPICmd) strongBaseAPICmd = weakBaseAPICmd;\
         }
     } else {
         [self cancelRequest];
+    }
+}
+
+
+
+#pragma mark - private methods
+
+- (BOOL)isLoadingWithRequestID:(NSInteger)requestID
+{
+    for (NSNumber *number in self.requestIdList) {
+        if (number.integerValue == requestID) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void)removeRequestIdWithRequestID:(NSInteger)requestId
+{
+    NSNumber *requestIDToRemove = nil;
+    for (NSNumber *storedRequestId in self.requestIdList) {
+        if ([storedRequestId integerValue] == requestId) {
+            requestIDToRemove = storedRequestId;
+            break;
+        }
+    }
+    if (requestIDToRemove) {
+        [self.requestIdList removeObject:requestIDToRemove];
+    }
+}
+
+- (void)cancelRequestWithRequestID:(NSInteger)requestID
+{
+    [self removeRequestIdWithRequestID:requestID];
+    [[RYApiProxy sharedInstance] cancelRequestWithRequestID:@(requestID)];
+}
+
+- (BOOL)isReachable
+{
+    if ([AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusUnknown) {
+        return YES;
+    } else {
+        return [[AFNetworkReachabilityManager sharedManager] isReachable];
     }
 }
 

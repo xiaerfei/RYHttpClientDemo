@@ -208,8 +208,8 @@ typedef NS_ENUM (NSUInteger, RYBaseAPICmdErrorType){
 /*************************************************************************************************/
 @protocol APICmdValidator <NSObject>
 @optional
-- (BOOL)manager:(RYBaseAPICmd *)manager isCorrectWithParamsData:(id)data;
-- (BOOL)manager:(RYBaseAPICmd *)manager isCorrectWithCallBackData:(id)data;
+- (BOOL)apiCmd:(RYBaseAPICmd *)manager isCorrectWithParamsData:(id)data;
+- (BOOL)apiCmd:(RYBaseAPICmd *)manager isCorrectWithCallBackData:(id)data;
 @end
 
 
