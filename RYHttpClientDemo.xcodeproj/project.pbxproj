@@ -45,6 +45,7 @@
 		4EA93D2F1C2808FB003EC468 /* GenerateRequestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA93D2E1C2808FB003EC468 /* GenerateRequestService.m */; };
 		4EBCCA3D1C29529E00C36544 /* NSObject+RYNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBCCA3C1C29529E00C36544 /* NSObject+RYNetworkingMethods.m */; };
 		4EBCCA401C29534400C36544 /* NSMutableString+RYNetworkingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBCCA3F1C29534400C36544 /* NSMutableString+RYNetworkingMethods.m */; };
+		4EE8E69C1CE2AB62007C0EA9 /* RYAPIBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE8E69B1CE2AB62007C0EA9 /* RYAPIBatchRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,8 @@
 		4EBCCA3C1C29529E00C36544 /* NSObject+RYNetworkingMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RYNetworkingMethods.m"; sourceTree = "<group>"; };
 		4EBCCA3E1C29534400C36544 /* NSMutableString+RYNetworkingMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+RYNetworkingMethods.h"; sourceTree = "<group>"; };
 		4EBCCA3F1C29534400C36544 /* NSMutableString+RYNetworkingMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+RYNetworkingMethods.m"; sourceTree = "<group>"; };
+		4EE8E69A1CE2AB62007C0EA9 /* RYAPIBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYAPIBatchRequest.h; sourceTree = "<group>"; };
+		4EE8E69B1CE2AB62007C0EA9 /* RYAPIBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYAPIBatchRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +355,7 @@
 				4EA93D121C27F695003EC468 /* Components */,
 				4EA93D0B1C27EC7A003EC468 /* Categories */,
 				4EA273AC1BBBB85300AD199D /* APICmd */,
+				4EE8E6991CE2AB62007C0EA9 /* APIBatch */,
 				4EA273AF1BBBB85300AD199D /* APILogger */,
 				4EBCC9D11C28EF3F00C36544 /* RYNetworkingConfiguration.h */,
 			);
@@ -437,6 +441,15 @@
 				4EA93D2E1C2808FB003EC468 /* GenerateRequestService.m */,
 			);
 			path = GenerateRequestService;
+			sourceTree = "<group>";
+		};
+		4EE8E6991CE2AB62007C0EA9 /* APIBatch */ = {
+			isa = PBXGroup;
+			children = (
+				4EE8E69A1CE2AB62007C0EA9 /* RYAPIBatchRequest.h */,
+				4EE8E69B1CE2AB62007C0EA9 /* RYAPIBatchRequest.m */,
+			);
+			path = APIBatch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -554,6 +567,7 @@
 				4E1F91911C2A769A0065BC53 /* ItemListAPICmd.m in Sources */,
 				4EA93D111C27EC7A003EC468 /* NSDictionary+RYNetworkingMethods.m in Sources */,
 				4EA93D1B1C27FB4C003EC468 /* RYRequestGenerator.m in Sources */,
+				4EE8E69C1CE2AB62007C0EA9 /* RYAPIBatchRequest.m in Sources */,
 				4EBCCA401C29534400C36544 /* NSMutableString+RYNetworkingMethods.m in Sources */,
 				4E6259511C48D79A0073AFE8 /* AFHTTPRequestOperationManager.m in Sources */,
 				4EA93D151C27F6C4003EC468 /* RYApiProxy.m in Sources */,

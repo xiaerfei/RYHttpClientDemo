@@ -16,4 +16,5 @@
 功能：在应用启动的时候获得本地列表中所有IP的ping值，然后将请求URL中的HOST修改为我们找到的最快的IP，一般是每天第一次启动的时候读一次Ping值，然后更新到本地。
 
 ### Version 2.0.3
-移除掉 RYAPIManager 单例；增加请求和返回的数据验证（APICmdValidator ）的协议
+1. 移除掉 RYAPIManager 单例；增加请求和返回的数据验证（APICmdValidator ）的协议；
+2. 增加批量请求类 RYAPIBatchRequest，可以同时发起多个请求，数据一同返回；
